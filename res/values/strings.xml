@@ -2,7 +2,13 @@
 <resources>
 
     <string name="app_name">DenenTokei</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="time_ex_2_2">xx/xx</string>
+    <string name="time_ex_3_3">xxx/xxx</string>
+    <string name="time_sub"> 後%d分</string>
+    <string name="time_sub_ex"> 後xx分</string>
+    
+    <string name="clockBackgroundDescription">clock background image</string>
+    <string name="clockSetting">show clock setting dialog</string>
+    
 </resources>

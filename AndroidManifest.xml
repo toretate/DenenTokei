@@ -34,7 +34,7 @@
             
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/clock"
+                android:resource="@xml/widget_info_2x1"
                 />
             
         </receiver>
