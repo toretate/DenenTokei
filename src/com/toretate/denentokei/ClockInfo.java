@@ -172,6 +172,8 @@ public class ClockInfo
 			m_charismaMax = 29 + m_princeLv * 3;
 		} else if( m_princeLv < 200 ) {
 			m_charismaMax = 326 + m_princeLv - 99;
+		} else if( m_princeLv < 300 ) {
+			m_charismaMax = 427;
 		}
 		
 		m_charisma = Math.min( m_charismaMax +1, m_charisma );
@@ -193,6 +195,8 @@ public class ClockInfo
 		} else if( m_princeLv < 199 ) {
 			m_staminaMax = 16;
 		} else if( m_princeLv < 200 ) {
+			m_staminaMax = 17;
+		} else if( m_princeLv < 300 ) {
 			m_staminaMax = 17;
 		}
 		

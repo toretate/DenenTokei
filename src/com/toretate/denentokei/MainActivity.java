@@ -20,6 +20,10 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.toretate.denentokei.inapp.InAppPurchaseManager;
+
 public class MainActivity extends Activity
 {
 	@NonNull ClockInfo m_info = new ClockInfo();
@@ -36,12 +40,24 @@ public class MainActivity extends Activity
 	@InjectView(R.id.staminaSub) Spinner m_staminaSubSpinner;
 	
 	@InjectView(R.id.saveButton) Button m_saveButton;
+	
+	@InjectView(R.id.adView) AdView m_adView;
+	
 
 	@Override
 	protected void onCreate( @Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		ButterKnife.inject( this );
+		
+		// Admob
+		AdRequest adRequest = new AdRequest.Builder()
+											.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+											.addTestDevice("10F2FE9276EAE35819748257A08833AE")
+											.build();
+		m_adView.loadAd(adRequest);
+
+		InAppPurchaseManager.getInstance().bind( this );
 		
 		// 標準をキャンセルにしておく -> Backボタンなどで閉じられた場合にウィジェットが配置されないように
 		setResult( RESULT_CANCELED );
@@ -82,7 +98,26 @@ public class MainActivity extends Activity
 				finish();
 			}
 		});;
-		
+	}
+	
+	@Override
+	protected void onPause()
+	{
+		m_adView.pause();
+		super.onPause();
+	};
+	
+	@Override
+	protected void onResume() {
+		m_adView.resume();
+		super.onResume();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		m_adView.destroy();
+		InAppPurchaseManager.getInstance().destroy( this );
+		super.onDestroy();
 	}
 
 	@Override
