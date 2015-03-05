@@ -84,7 +84,7 @@ public class ClockWidget extends AppWidgetProvider
 
 		// ボタンハンドラの設定
 		{
-			final Intent intent = new Intent( context, MainActivity.class );
+			final Intent intent = new Intent( context, ClockWidgetSettingsActivity.class );
 			intent.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId );
 			final PendingIntent pendingIntent = PendingIntent.getActivity( context, appWidgetId, intent, 0 );
 			views.setOnClickPendingIntent( R.id.setting_button, pendingIntent );
