@@ -26,20 +26,32 @@
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         
+        <!-- ウィジェット作成の初期値設定用アクティビティ -->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-
+                
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
+        <!-- ウィジェットの設定用アクティビティ -->
+        <activity
+            android:name=".ClockWidgetSettingsActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        
+        <!-- ウィジェット -->
         <receiver
             android:name="com.toretate.denentokei.ClockWidget"
-            android:label="田園時計"
+            android:label="@string/widget_name"
             >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

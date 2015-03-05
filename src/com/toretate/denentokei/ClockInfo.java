@@ -250,13 +250,16 @@ public class ClockInfo
 	static @NonNull ClockInfo loadValues( @NonNull final Context context, final int appWidgetId )
 	{
 		if( appWidgetId == -1 || appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) {
-			return new ClockInfo();
+			return loadWidgetCreateValues( context );
 		}
 		
 		ClockInfo info = s_widgetIdToInstance.get( appWidgetId );
 		if( info == null ) {
-			info = new ClockInfo();
+			info = loadWidgetCreateValues( context );
+			info.m_saveTime		= System.currentTimeMillis();
+			
 			s_widgetIdToInstance.append( appWidgetId, info );
+			return info;
 		}
 		
 		final SharedPreferences prefs = context.getSharedPreferences( PREFS_NAME + appWidgetId, 0 );
@@ -272,4 +275,46 @@ public class ClockInfo
 		return info;
 	}
 
+	/**
+	 * 各ウィジェットを作成するときの初期値を取得します
+	 * @param context コンテキスト
+	 * @return 設定値
+	 */
+	static @NonNull ClockInfo loadWidgetCreateValues( @NonNull final Context context )
+	{
+		ClockInfo info = new ClockInfo();
+		
+		final SharedPreferences prefs = context.getSharedPreferences( PREFS_NAME, 0 );
+		info.m_princeLv 	= prefs.getInt( PREF_PREFIX_KEY + "PrinceLv", 0 );
+		info.m_charisma 	= prefs.getInt( PREF_PREFIX_KEY + "Charisma", 0 );
+		info.m_charismaMax 	= prefs.getInt( PREF_PREFIX_KEY + "CharismaMax", 0 );
+		info.m_charismaSub 	= prefs.getInt( PREF_PREFIX_KEY + "CharismaSub", 0 );
+		info.m_stamina 		= prefs.getInt( PREF_PREFIX_KEY + "Stamina", 0 );
+		info.m_staminaMax 	= prefs.getInt( PREF_PREFIX_KEY + "StaminaMax", 0 );
+		info.m_staminaSub 	= prefs.getInt( PREF_PREFIX_KEY + "StaminaSub", 0 );
+		info.m_saveTime		= prefs.getLong( PREF_PREFIX_KEY + "SAVETIME", System.currentTimeMillis() );
+		
+		return info;
+	}
+	
+	/**
+	 *  各ウィジェットを作成するときの初期値設定を保存します
+	 *  @param context コンテキスト
+	 */
+	static void saveWidgetCreateValues( @NonNull final Context context, @NonNull final ClockInfo info )
+	{
+		info.m_saveTime = System.currentTimeMillis();
+		
+		final SharedPreferences.Editor editor = context.getSharedPreferences( PREFS_NAME, 0 ).edit();
+		editor.putInt( PREF_PREFIX_KEY + "PrinceLv", info.m_princeLv );
+		editor.putInt( PREF_PREFIX_KEY + "Charisma", info.m_charisma );
+		editor.putInt( PREF_PREFIX_KEY + "CharismaMax", info.m_charismaMax );
+		editor.putInt( PREF_PREFIX_KEY + "CharismaSub", info.m_charismaSub );
+		editor.putInt( PREF_PREFIX_KEY + "Stamina", info.m_stamina );
+		editor.putInt( PREF_PREFIX_KEY + "StaminaMax", info.m_staminaMax );
+		editor.putInt( PREF_PREFIX_KEY + "StaminaSub", info.m_staminaSub );
+		editor.putLong( PREF_PREFIX_KEY + "SAVETIME", info.m_saveTime );
+		editor.commit();
+	}
+	
 }

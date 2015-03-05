@@ -1,0 +1,139 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.toretate.denentokei.MainActivity"
+    >
+    
+
+	<TableLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_alignParentTop="true"
+	    >
+
+	    <TableRow
+	        android:id="@+id/tableRow3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:id="@+id/textView3"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/princeLv"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <Spinner
+	            android:id="@+id/princeLvSpinner"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" />
+	
+	    </TableRow>
+
+		<TableRow
+		    android:id="@+id/tableRow1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+		
+		    <TextView
+		        android:id="@+id/charismaLabel"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/charisma"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        />
+		
+		    <Spinner
+		        android:id="@+id/charisma"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+				/>
+		
+		    <TextView
+		        android:id="@+id/charismaMax"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/time_denominator_3"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        />
+		
+		</TableRow>
+    
+		<TableRow
+		    android:id="@+id/tableRow2"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+		
+		    <TextView
+		        android:id="@+id/staminaLabel"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/stamina"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        />
+		
+		    <Spinner
+		        android:id="@+id/stamina"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+				/>
+		
+		    <TextView
+		        android:id="@+id/staminaMax"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/time_denominator_3"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        />
+		
+		</TableRow>
+
+		<TableRow
+		    android:id="@+id/tableRow"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+		
+		    <TextView
+		        android:id="@+id/staminaSubLabel"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/next"
+		        android:textAppearance="?android:attr/textAppearanceMedium" />
+		
+		    <Spinner
+		        android:id="@+id/staminaSub"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+			/>
+		</TableRow>
+       
+		<!-- 保存ボタン -->
+		<TableRow>
+			<Button
+			    android:id="@+id/saveButton"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_span="3"
+			    android:text="@string/save"
+			    />
+		</TableRow>
+
+	</TableLayout>
+	
+	<!-- 広告枠 -->
+	<com.google.android.gms.ads.AdView
+	    xmlns:ads="http://schemas.android.com/apk/res-auto"
+	    android:id="@+id/adView"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    ads:adUnitId="ca-app-pub-9826001641330476/3343091144"
+	    ads:adSize="BANNER" />
+</RelativeLayout>
+

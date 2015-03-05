@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">アイギス田園時計</string>
+    <!-- アプリ名 -->
+    <string name="app_name">アイギス田園タイマー</string>
+    
+    <!-- ウィジェット名 -->
+    <string name="widget_name">アイギス田園タイマー</string>
+
+    <!-- ウィジェットで使用 -->
     <string name="action_settings">Settings</string>
     <string name="time_ex_2_2">xx/xx</string>
     <string name="time_ex_3_3">xxx/xxx</string>
@@ -9,6 +15,7 @@
     <string name="time_sub_ex"> 後xx分</string>
     
     <!-- 設定画面で使用 -->
+    <string name="settings_main_info">この画面の設定値はウィジェットを作るときに初期値として使用されます</string>
     <string name="stamina">スタミナ</string>
     <string name="charisma">カリスマ</string>
     <string name="princeLv">王子Lv</string>
@@ -16,6 +23,7 @@
     <string name="next">次</string>
     <string name="time_denominator_2">/xx</string>
     <string name="time_denominator_3">/xxx</string>
+   	<string name="saved">保存しました</string>
     
     <string name="clockBackgroundDescription">clock background image</string>
     <string name="clockSetting">show clock setting dialog</string>
