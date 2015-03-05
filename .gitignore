@@ -3,3 +3,4 @@ gen/
 libs/android-support-v4.jar
 .apt_generated/
 .DS_Store
+/toretatenee.keystore
