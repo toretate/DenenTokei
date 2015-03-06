@@ -7,30 +7,52 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 public class ClockWidget extends AppWidgetProvider
 {
+	public static String s_fromWidgetSettingButton = "fromWidgetSettingButton";
 	
 	@Override
 	public void onEnabled( @Nullable final Context context )
 	{
+		Log.i("Widget", "onEnabled");
+			
 		super.onEnabled(context);
 	}
 	
 	@Override
 	public void onUpdate( @Nullable final Context context, @Nullable final AppWidgetManager appWidgetManager, @Nullable final int[] appWidgetIds )
 	{
+		if( appWidgetIds != null ) {
+			for( int id : appWidgetIds ) {
+				Log.i("Widget", "onUpdate ID:" + id);
+			}
+		}
+		
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-	}
+		
+		if( appWidgetIds != null && context != null && appWidgetManager != null ) {
+			for( int appWidgetId : appWidgetIds ) {
+				updateWidget(context, appWidgetId, appWidgetManager);
+			}
+		}
+	}	
 	
 	@Override
 	public void onDeleted( @Nullable final Context context, @Nullable final int[] appWidgetIds) {
+		if( appWidgetIds != null ) {
+			for( int id : appWidgetIds ) {
+				Log.i("Widget", "onDeleted ID:" + id);
+			}
+		}
 		super.onDeleted(context, appWidgetIds);
 	}
 	
 	@Override
 	public void onDisabled( @Nullable final Context context ) {
+		Log.i("Widget", "onDisabled");
 		super.onDisabled(context);
 	}
 	
@@ -40,16 +62,21 @@ public class ClockWidget extends AppWidgetProvider
 			super.onReceive(context, intent);
 			return;
 		}
-		
+		final String action = intent.getAction();
 		final int appWidgetId = intent.getIntExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID );
-		if( AppWidgetManager.ACTION_APPWIDGET_DELETED.equals( intent.getAction()) ) {
+		
+		Log.i("Widget", "action:" +intent.getAction() + " ID:" +appWidgetId);
+		if( appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) return;
+		
+		if( AppWidgetManager.ACTION_APPWIDGET_DELETED.equals( action ) ) {
 			WidgetAlarmUtils.deleteAlarm(context, appWidgetId);
-		} else if( AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals( intent.getAction() ) ) {
+		} else if( AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals( action ) ) {
 			
 			if( appWidgetId == -1 || appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) {
 				// エラー。何もしない
 			} else {
 				if( WidgetAlarmUtils.isAlarmSet( intent ) == false ) {
+					Log.i("Widget", "　alarm set");
 					WidgetAlarmUtils.setAlarm( context, appWidgetId );
 					updateWidget( context, appWidgetId );
 				} else {
@@ -73,9 +100,9 @@ public class ClockWidget extends AppWidgetProvider
 		final RemoteViews views = new RemoteViews( context.getPackageName(), R.layout.widget_2x1 );
 		
 		// 文字列の更新
-		final ClockInfo info;
+		final ClockInfo info = ClockInfo.loadValues( context, appWidgetId );
+		Log.i("Widget", "　　updateWidget:" + " ID:" +appWidgetId);
 		{
-			info = ClockInfo.loadValues( context, appWidgetId );
 			final long now = System.currentTimeMillis();
 			views.setTextViewText( R.id.staminaClock, info.getStaminaString( now ) );
 			views.setTextViewText( R.id.staminaClockSub, info.getStaminaSubString( now ) );
@@ -86,6 +113,7 @@ public class ClockWidget extends AppWidgetProvider
 		{
 			final Intent intent = new Intent( context, ClockWidgetSettingsActivity.class );
 			intent.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId );
+			intent.putExtra( s_fromWidgetSettingButton, Boolean.TRUE );
 			final PendingIntent pendingIntent = PendingIntent.getActivity( context, appWidgetId, intent, 0 );
 			views.setOnClickPendingIntent( R.id.setting_button, pendingIntent );
 		}

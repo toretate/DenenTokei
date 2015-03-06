@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ public class ClockWidgetSettingsActivity extends Activity
 	@NonNull ClockInfo m_info = new ClockInfo();
 	
 	int m_appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;	//!< ウィジェットのIDの基
+	boolean m_fromWidgetSettingButton;							//!< ウィジェットの設定ボタンから来たかどうか
 
 	@InjectView(R.id.princeLvSpinner) Spinner m_princeLvSpinner;
 	
@@ -65,10 +67,14 @@ public class ClockWidgetSettingsActivity extends Activity
 		if( extras != null ) {
 			// ウィジェットIDの取得
 			this.m_appWidgetId = extras.getInt( AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID );
+			
+			this.m_fromWidgetSettingButton = extras.getBoolean( ClockWidget.s_fromWidgetSettingButton, Boolean.FALSE );
 		}
 		// ウィジェットIDの習得失敗したら goto fail
 		if( this.m_appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) {
-			finish();
+			Log.i("Widget", "FAILED:GET WIDGET ID");
+			this.moveTaskToBack( true );
+			return;
 		}
 		
 		// 最低値設定
@@ -83,17 +89,28 @@ public class ClockWidgetSettingsActivity extends Activity
 				// 保存ボタンの処理
 				
 				// prefに保存
-				final Context ctx = ClockWidgetSettingsActivity.this;
-				saveValues( ctx, m_appWidgetId, m_info );
-				
-				// 成功を返す
-				final Intent result = new Intent( ClockWidgetSettingsActivity.this, ClockWidget.class );
-				result.setAction( AppWidgetManager.ACTION_APPWIDGET_UPDATE );
-				result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] { m_appWidgetId } );
-				result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, m_appWidgetId );
-				sendBroadcast( result );
-				setResult( RESULT_OK, result );
-				finish();
+				final Activity activity = ClockWidgetSettingsActivity.this;
+				saveValues( activity, m_appWidgetId, m_info );
+	
+				if( ClockWidgetSettingsActivity.this.m_fromWidgetSettingButton ) {
+					// 単に終了
+					// 成功を返す
+					final Intent result = new Intent( ClockWidgetSettingsActivity.this, ClockWidget.class );
+					result.setAction( AppWidgetManager.ACTION_APPWIDGET_UPDATE );
+					result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] { m_appWidgetId } );
+					result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, m_appWidgetId );
+					sendBroadcast( result );
+					activity.moveTaskToBack( true );
+				} else {
+					// 成功を返す
+					final Intent result = new Intent( ClockWidgetSettingsActivity.this, ClockWidget.class );
+					result.setAction( AppWidgetManager.ACTION_APPWIDGET_UPDATE );
+					result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] { m_appWidgetId } );
+					result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, m_appWidgetId );
+					sendBroadcast( result );
+					setResult( RESULT_OK, result );
+					activity.moveTaskToBack( true );
+				}
 			}
 		});;
 	}

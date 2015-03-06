@@ -6,12 +6,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.util.SparseArray;
  
 public class ClockInfo
 {
-	private static SparseArray<ClockInfo> s_widgetIdToInstance = new SparseArray<ClockInfo>();
-	
     private static final String PREFS_NAME = "com.toretate.denentokei.ClockInfo";
     private static final String PREF_PREFIX_KEY = "prefix_";
 
@@ -223,8 +220,6 @@ public class ClockInfo
 		editor.putInt( PREF_PREFIX_KEY + "StaminaSub", this.m_staminaSub );
 		editor.putLong( PREF_PREFIX_KEY + "SAVETIME", this.m_saveTime );
 		editor.commit();
-		
-		s_widgetIdToInstance.append( appWidgetId, this );
 	}
 	
 	/**
@@ -253,26 +248,23 @@ public class ClockInfo
 			return loadWidgetCreateValues( context );
 		}
 		
-		ClockInfo info = s_widgetIdToInstance.get( appWidgetId );
-		if( info == null ) {
-			info = loadWidgetCreateValues( context );
-			info.m_saveTime		= System.currentTimeMillis();
-			
-			s_widgetIdToInstance.append( appWidgetId, info );
-			return info;
-		}
+		ClockInfo info = loadWidgetCreateValues( context );
 		
 		final SharedPreferences prefs = context.getSharedPreferences( PREFS_NAME + appWidgetId, 0 );
-		info.m_princeLv 	= prefs.getInt( PREF_PREFIX_KEY + "PrinceLv", 0 );
-		info.m_charisma 	= prefs.getInt( PREF_PREFIX_KEY + "Charisma", 0 );
-		info.m_charismaMax 	= prefs.getInt( PREF_PREFIX_KEY + "CharismaMax", 0 );
-		info.m_charismaSub 	= prefs.getInt( PREF_PREFIX_KEY + "CharismaSub", 0 );
-		info.m_stamina 		= prefs.getInt( PREF_PREFIX_KEY + "Stamina", 0 );
-		info.m_staminaMax 	= prefs.getInt( PREF_PREFIX_KEY + "StaminaMax", 0 );
-		info.m_staminaSub 	= prefs.getInt( PREF_PREFIX_KEY + "StaminaSub", 0 );
-		info.m_saveTime		= prefs.getLong( PREF_PREFIX_KEY + "SAVETIME", System.currentTimeMillis() );
-		
-		return info;
+		if( prefs.contains( PREF_PREFIX_KEY + "PrinceLv" ) ) {
+			info.m_princeLv 	= prefs.getInt( PREF_PREFIX_KEY + "PrinceLv", 0 );
+			info.m_charisma 	= prefs.getInt( PREF_PREFIX_KEY + "Charisma", 0 );
+			info.m_charismaMax 	= prefs.getInt( PREF_PREFIX_KEY + "CharismaMax", 0 );
+			info.m_charismaSub 	= prefs.getInt( PREF_PREFIX_KEY + "CharismaSub", 0 );
+			info.m_stamina 		= prefs.getInt( PREF_PREFIX_KEY + "Stamina", 0 );
+			info.m_staminaMax 	= prefs.getInt( PREF_PREFIX_KEY + "StaminaMax", 0 );
+			info.m_staminaSub 	= prefs.getInt( PREF_PREFIX_KEY + "StaminaSub", 0 );
+			info.m_saveTime		= prefs.getLong( PREF_PREFIX_KEY + "SAVETIME", System.currentTimeMillis() );
+			
+			return info;
+		} else {
+			return info;
+		}
 	}
 
 	/**
