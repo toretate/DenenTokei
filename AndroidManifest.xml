@@ -9,59 +9,70 @@
         android:targetSdkVersion="15" />
 
     <!-- ad mob -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 端末起動時処理許可 -->
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
+
         <!-- ad mob -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
-        
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+
         <!-- ウィジェット作成の初期値設定用アクティビティ -->
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name="com.toretate.denentokei.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <!-- ウィジェットの設定用アクティビティ -->
         <activity
-            android:name=".ClockWidgetSettingsActivity"
-            android:label="@string/app_name" >
+            android:name="com.toretate.denentokei.ClockWidgetSettingsActivity"
+            android:label="@string/app_name"
+            android:launchMode="standard" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        
+
         <!-- ウィジェット -->
         <receiver
             android:name="com.toretate.denentokei.ClockWidget"
-            android:label="@string/widget_name"
-            >
+            android:label="@string/widget_name" >
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.intent.action.PACKAGE_RESTARTED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.ACTION_MY_PACKAGE_REPLACED" /> <!-- アプリ更新 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" /> <!-- Android起動 -->
+                <action android:name="android.intent.action.DATE_CHANGED" /> <!-- 日付変更 -->
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" /> <!-- タイムゾーン変更 -->
+                <action android:name="android.intent.action.TIME_SET" /> <!-- 時刻設定 -->
             </intent-filter>
-            
+
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info_2x1"
-                />
-            
+                android:resource="@xml/widget_info_2x1" />
         </receiver>
     </application>
 

@@ -73,7 +73,7 @@ public class ClockWidgetSettingsActivity extends Activity
 		// ウィジェットIDの習得失敗したら goto fail
 		if( this.m_appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) {
 			Log.i("Widget", "FAILED:GET WIDGET ID");
-			this.moveTaskToBack( true );
+			finish();
 			return;
 		}
 		
@@ -100,7 +100,7 @@ public class ClockWidgetSettingsActivity extends Activity
 					result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] { m_appWidgetId } );
 					result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, m_appWidgetId );
 					sendBroadcast( result );
-					activity.moveTaskToBack( true );
+					finish();
 				} else {
 					// 成功を返す
 					final Intent result = new Intent( ClockWidgetSettingsActivity.this, ClockWidget.class );
@@ -109,7 +109,7 @@ public class ClockWidgetSettingsActivity extends Activity
 					result.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, m_appWidgetId );
 					sendBroadcast( result );
 					setResult( RESULT_OK, result );
-					activity.moveTaskToBack( true );
+					finish();
 				}
 			}
 		});;

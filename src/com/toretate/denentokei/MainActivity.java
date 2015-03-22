@@ -39,6 +39,7 @@ public class MainActivity extends Activity
 		AdRequest adRequest = new AdRequest.Builder()
 											.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
 											.addTestDevice("10F2FE9276EAE35819748257A08833AE")
+											.addTestDevice("66F8796DEDCDF99B7B8EFED91381216C")
 											.build();
 		m_adView.loadAd(adRequest);
 

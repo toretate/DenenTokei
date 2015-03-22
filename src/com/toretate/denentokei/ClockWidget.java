@@ -3,6 +3,7 @@ package com.toretate.denentokei;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -63,6 +64,19 @@ public class ClockWidget extends AppWidgetProvider
 			return;
 		}
 		final String action = intent.getAction();
+		
+		// 更新チェック
+		if( Intent.ACTION_MY_PACKAGE_REPLACED.equals( action ) 
+				|| Intent.ACTION_BOOT_COMPLETED.equals( action ) 
+				|| Intent.ACTION_TIME_CHANGED.equals( action )
+				|| Intent.ACTION_DATE_CHANGED.equals( action )
+				|| Intent.ACTION_TIMEZONE_CHANGED.equals( action )
+				) {
+			updateAllWidget( context );
+			super.onReceive( context, intent );
+			return;
+		}
+		
 		final int appWidgetId = intent.getIntExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID );
 		
 		Log.i("Widget", "action:" +intent.getAction() + " ID:" +appWidgetId);
@@ -70,7 +84,11 @@ public class ClockWidget extends AppWidgetProvider
 		
 		if( AppWidgetManager.ACTION_APPWIDGET_DELETED.equals( action ) ) {
 			WidgetAlarmUtils.deleteAlarm(context, appWidgetId);
-		} else if( AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals( action ) ) {
+		} else if(
+				AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals( action )
+				|| action.equals("android.appwidget.action.APPWIDGET_UPDATE_OPTIONS")
+				|| Intent.ACTION_MY_PACKAGE_REPLACED.equals( action )
+				) {
 			
 			if( appWidgetId == -1 || appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) {
 				// エラー。何もしない
@@ -85,6 +103,20 @@ public class ClockWidget extends AppWidgetProvider
 			}
 		}
 		super.onReceive(context, intent);
+	}
+	
+	static void updateAllWidget( @NonNull final Context context )
+	{
+		final AppWidgetManager mng = AppWidgetManager.getInstance( context );
+		if( mng == null ) return;
+		
+		int[] appWidgetIds = mng.getAppWidgetIds( new ComponentName( context, ClockWidget.class ) );
+		if( appWidgetIds == null ) return;
+		for( int appWidgetId : appWidgetIds ) {
+			WidgetAlarmUtils.deleteAlarm(context, appWidgetId);
+			WidgetAlarmUtils.setAlarm( context, appWidgetId );
+			updateWidget( context, appWidgetId, mng );
+		}
 	}
 	
 	/** ウィジェットの更新を行います */
