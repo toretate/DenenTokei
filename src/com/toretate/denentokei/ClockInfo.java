@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
  
 public class ClockInfo
 {
@@ -20,7 +21,7 @@ public class ClockInfo
     
     private int m_princeLv;
     
-	private int m_charisma;		//!< 現在のカリスマ
+	private int m_charisma;			//!< 現在のカリスマ
 	private int m_charismaMax;		//!< 現レベルでの最大カリスマ
 	private int m_charismaSub;		//!< カリスマが１回復するまでの分数(まぁ使わないでしょ…）
 	
@@ -42,6 +43,13 @@ public class ClockInfo
 	public int getCharisma() { return m_charisma; }
 	public String getCharismaString() { return String.format( Locale.getDefault(), "%03d", m_charisma + 1 ); }
 	public void setCharisma( final int charisma ) { this.m_charisma = Math.min( charisma, this.m_charismaMax +1 ); }
+	
+	public void toastSta( Context ctx )
+	{
+		long currentTimeMillis = System.currentTimeMillis();
+		Toast toast = Toast.makeText( ctx, m_stamina +":" +getStaminaString(currentTimeMillis), Toast.LENGTH_LONG);
+		toast.show();
+	}
 	
 	public int getCharismaMax() { return m_charismaMax; }
 	public String getCharismaMaxString() { return String.format( Locale.getDefault(), "%03d", m_charismaMax + 1 ); }
@@ -98,9 +106,11 @@ public class ClockInfo
 	 * @return 現在のスタミナ値
 	 */
 	public int getStamina( final long currentTimeMillis ) {
-		long now = currentTimeMillis - m_saveTime; 							// 経過ミリ秒
-		long sub = ( 60 - getStaminaSub( currentTimeMillis ) ) * 60 * 1000;	// ”後x分”のミリ秒
-		now = ( now + sub ) / s_interval_stamina;							// ミリ秒 -> h
+		long now = currentTimeMillis - m_saveTime; 		// 保存時からの経過ミリ秒
+		long sub = (60 - m_staminaSub ) * 60 * 1000;	// 保存時のm_staminaからの経過ミリ秒
+		
+		// 保存時からの経過ミリ秒 + 保存時のm_staminaからの経過ミリ秒 -> 経過h
+		now = (int)Math.floor( ( now + sub ) / s_interval_stamina );
 		
 		if( now <= Integer.MAX_VALUE ) {
 			return m_stamina + (int)now;

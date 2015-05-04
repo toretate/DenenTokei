@@ -10,10 +10,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 public class ClockWidget extends AppWidgetProvider
 {
-	public static String s_fromWidgetSettingButton = "fromWidgetSettingButton";
+	public static String s_fromWidgetSettingButton 	= "fromWidgetSettingButton";
 	
 	@Override
 	public void onEnabled( @Nullable final Context context )
@@ -140,7 +141,18 @@ public class ClockWidget extends AppWidgetProvider
 			views.setTextViewText( R.id.staminaClockSub, info.getStaminaSubString( now ) );
 			views.setTextViewText( R.id.charismaClock, info.getCharismaString( now ) );
 		}
-
+		
+//		if( BuildConfig.DEBUG ) {
+//			String msg = "sta:" +info.getStamina() + ", " +info.getStaminaString(System.currentTimeMillis());
+//			
+//			final Intent intent = new Intent( context, DebugToastService.class );
+//			intent.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId );
+//			intent.putExtra( DebugToastService.s_toastMsg, msg );
+//			
+//			final PendingIntent pendingIntent = PendingIntent.getService( context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT );
+//			views.setOnClickPendingIntent( R.id.widget_surface, pendingIntent);
+//		}
+		
 		// ボタンハンドラの設定
 		{
 			final Intent intent = new Intent( context, ClockWidgetSettingsActivity.class );
