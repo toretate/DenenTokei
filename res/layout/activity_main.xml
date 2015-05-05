@@ -35,7 +35,7 @@
 	            android:text="@string/princeLv"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 	
-	        <Spinner
+	        <Button
 	            android:id="@+id/princeLvSpinner"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content" />

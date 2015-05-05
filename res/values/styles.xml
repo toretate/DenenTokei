@@ -38,4 +38,22 @@
         <item name="android:textColor">@color/color2</item>
     </style>
     
+   <color name="dialogbg">#a0909090</color>
+   
+   <style name="TransparentDialogTheme" parent="@android:style/Theme.Light">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    
+    <style
+        name="transparent"
+        parent="@android:style/Theme.Dialog"
+        >
+    	<item name="android:windowNoTitle">false</item>
+    	<item name="android:windowBackground">@color/dialogbg</item>
+        <item name="android:background">@color/dialogbg</item>
+	</style>
 </resources>

@@ -10,17 +10,14 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.toretate.denentokei.dialog.NumberPickerDialog;
 
 /**
  * 各ウィジェットを設定するためのアクティビティ
@@ -32,14 +29,14 @@ public class ClockWidgetSettingsActivity extends Activity
 	int m_appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;	//!< ウィジェットのIDの基
 	boolean m_fromWidgetSettingButton;							//!< ウィジェットの設定ボタンから来たかどうか
 
-	@InjectView(R.id.princeLvSpinner) Spinner m_princeLvSpinner;
+	@InjectView(R.id.princeLvSpinner) Button m_princeLvSpinner;
 	
 	@InjectView(R.id.charismaMax) TextView m_charismaMax;
-	@InjectView(R.id.charisma) Spinner m_charismaSpinner;
+	@InjectView(R.id.charisma) Button m_charismaSpinner;
 	
 	@InjectView(R.id.staminaMax) TextView m_staminaMax;
-	@InjectView(R.id.stamina) Spinner m_staminaSpinner;
-	@InjectView(R.id.staminaSub) Spinner m_staminaSubSpinner;
+	@InjectView(R.id.stamina) Button m_staminaSpinner;
+	@InjectView(R.id.staminaSub) Button m_staminaSubSpinner;
 	
 	@InjectView(R.id.saveButton) Button m_saveButton;
 	
@@ -136,32 +133,33 @@ public class ClockWidgetSettingsActivity extends Activity
 
 	private void initPrinceLvListUI()
 	{
-		// 王子Lv(表示上1～300)
-		final Spinner spinner = m_princeLvSpinner;
-		spinner.setOnItemSelectedListener( null );
-
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>( this, android.R.layout.simple_spinner_item );
-		for( int i=0; i<300; i++ ) {
-			adapter.add( ( i +1 ) +"" );
-		}
-		adapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
-		spinner.setAdapter( adapter );
-		
-		spinner.setSelection( m_info.getPrinceLv() );
-		spinner.setOnItemSelectedListener( new OnItemSelectedListener() {
-
+		final Button button = m_princeLvSpinner;
+		button.setText( String.valueOf( m_info.getPrinceLv() ) );
+		button.setOnClickListener( new OnClickListener() {
 			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				m_info.setPrinceLv( position );
-				
-				initCharismaUI();
-				initStaminaUI();
-			}
+			public void onClick(View v) {
+				String title = getString( R.string.princeLv );
+				title = title != null ? title : "";
+				final NumberPickerDialog dialog = new NumberPickerDialog(m_info.getPrinceLv(), 1, 300, title );
+				dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
+					@Override
+					public void numberChanged( int number ) {
+						m_info.setPrinceLv( number );
+						button.setText( String.valueOf(number) );
+					}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
+					@Override
+					public void dialogClosed(int number) {
+						initCharismaUI();
+						initStaminaUI();
+					}
+				});
+				dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "priceLvPicker" );
 			}
 		});
+		
+		initCharismaUI();
+		initStaminaUI();
 	}
 	
 	static void saveValues( @NonNull final Context context, int appWidgetId, @NonNull final ClockInfo info )
@@ -174,27 +172,26 @@ public class ClockWidgetSettingsActivity extends Activity
 	{
 		m_charismaMax.setText( "/" + m_info.getCharismaMaxString() );
 		
-		// 現在値Spinnerを 0～m_charismaMaxに変更
-		final Spinner spinner = m_charismaSpinner;
-		spinner.setOnItemSelectedListener( null );
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-		for( int i=0; i<=m_info.getCharismaMax() +1; i++ ) {
-			adapter.add( String.valueOf( i ) );
-		}
-		adapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
-		spinner.setAdapter( adapter );
-
-		// カリスマ値の設定
-		spinner.setSelection( m_info.getCharisma() );
-		spinner.setOnItemSelectedListener( new OnItemSelectedListener() {
+		final Button button = m_charismaSpinner;
+		button.setText( String.valueOf( m_info.getCharisma() ) );
+		button.setOnClickListener( new OnClickListener() {
 			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				m_info.setCharisma( position );
-			}
+			public void onClick(View v) {
+				String title = getString( R.string.charisma );
+				title = title != null ? title : "";
+				final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getCharisma(), 0, m_info.getCharismaMax() +1, title );
+				dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
+					@Override
+					public void numberChanged( int number ) {
+						m_info.setCharisma( number );
+						button.setText( String.valueOf( m_info.getCharisma() ) );
+					}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
+					@Override
+					public void dialogClosed(int number) {
+					}
+				});
+				dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "charismaPicker" );
 			}
 		});
 	}
@@ -209,53 +206,54 @@ public class ClockWidgetSettingsActivity extends Activity
 		// スタミナ現在値設定
 		{
 			// 現在値Spinnerを 0～m_staminaMaxに変更
-			final Spinner spinner = m_staminaSpinner;
-			spinner.setOnItemSelectedListener( null );
-			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-			for( int i=0; i<=m_info.getStaminaMax() +1; i++ ) {
-				adapter.add( String.valueOf( i ) );
-			}
-			adapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
-			spinner.setAdapter( adapter );
-
-			// スタミナ値設定
-			spinner.setSelection( m_info.getStamina() );
-			spinner.setOnItemSelectedListener( new OnItemSelectedListener() {
+			final Button button = m_staminaSpinner;
+			button.setText( String.valueOf( m_info.getStamina() ) );
+			button.setOnClickListener( new OnClickListener() {
 				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-					m_info.setStamina( position );
-				}
+				public void onClick(View v) {
+					String title = getString( R.string.stamina );
+					title = title != null ? title : "";
+					final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getStamina(), 0, m_info.getStaminaMax() +1, title );
+					dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
+						@Override
+						public void numberChanged( int number ) {
+							m_info.setStamina( number );
+							button.setText( String.valueOf( m_info.getStamina() ) );
+						}
 
-				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
+						@Override
+						public void dialogClosed(int number) {
+						}
+					});
+					dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "staminaPicker" );
 				}
 			});
+			
 		}
 		
 		// スタミナ回復まで設定
 		{
 			// 現在値Spinnerを 0～60に変更
-			final Spinner spinner = m_staminaSubSpinner;
-			spinner.setOnItemSelectedListener( null );
-			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-			for( int i=0; i<=60; i++ ) {
-				adapter.add( String.valueOf( i ) );
-			}
-			adapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
-			spinner.setAdapter( adapter );
-
-			// スタミナ値設定
-			spinner.setSelection( m_info.getStaminaSub() );
-			spinner.setOnItemSelectedListener( new OnItemSelectedListener() {
+			final Button button = m_staminaSubSpinner;
+			button.setText( String.valueOf( m_info.getStaminaSub() ) );
+			button.setOnClickListener( new OnClickListener() {
 				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-					m_info.setStaminaSub( position );
-				}
+				public void onClick(View v) {
+					String title = getString( R.string.next );
+					title = title != null ? title : "";
+					final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getStaminaSub(), 0, 60, title );
+					dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
+						@Override
+						public void numberChanged( int number ) {
+							m_info.setStaminaSub( number );
+							button.setText( String.valueOf( m_info.getStaminaSub() ) );
+						}
 
-				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
+						@Override
+						public void dialogClosed(int number) {
+						}
+					});
+					dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "staminaSubPicker" );
 				}
 			});
 		}
