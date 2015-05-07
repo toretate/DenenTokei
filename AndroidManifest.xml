@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.toretate.denentokei"
-    android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionCode="3"
+    android:versionName="1.2" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -11,7 +11,8 @@
     <!-- ad mob -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 端末起動時処理許可 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+ <!-- 端末起動時処理許可 -->
 
     <application
         android:allowBackup="true"
@@ -30,7 +31,7 @@
 
         <!-- ウィジェット作成の初期値設定用アクティビティ -->
         <activity
-            android:name="com.toretate.denentokei.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
             <intent-filter>
@@ -43,7 +44,7 @@
 
         <!-- ウィジェットの設定用アクティビティ -->
         <activity
-            android:name="com.toretate.denentokei.ClockWidgetSettingsActivity"
+            android:name=".ClockWidgetSettingsActivity"
             android:label="@string/app_name"
             android:launchMode="standard" >
             <intent-filter>
@@ -54,7 +55,7 @@
 
         <!-- ウィジェット -->
         <receiver
-            android:name="com.toretate.denentokei.ClockWidget"
+            android:name=".ClockWidget"
             android:label="@string/widget_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -63,11 +64,12 @@
                 <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
                 <action android:name="android.intent.action.PACKAGE_RESTARTED" />
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <action android:name="android.intent.action.ACTION_MY_PACKAGE_REPLACED" /> <!-- アプリ更新 -->
-                <action android:name="android.intent.action.BOOT_COMPLETED" /> <!-- Android起動 -->
-                <action android:name="android.intent.action.DATE_CHANGED" /> <!-- 日付変更 -->
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" /> <!-- タイムゾーン変更 -->
-                <action android:name="android.intent.action.TIME_SET" /> <!-- 時刻設定 -->
+                
+                <action android:name="android.intent.action.ACTION_MY_PACKAGE_REPLACED" />	<!-- アプリ更新 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />				<!-- Android起動 -->
+                <action android:name="android.intent.action.DATE_CHANGED" />				<!-- 日付変更 -->
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />			<!-- タイムゾーン変更 -->
+                <action android:name="android.intent.action.TIME_SET" />					<!-- 時刻設定 -->
             </intent-filter>
 
             <meta-data

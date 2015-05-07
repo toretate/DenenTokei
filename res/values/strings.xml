@@ -3,7 +3,7 @@
 
     <!-- アプリ名 -->
     <string name="app_name">アイギス田園タイマー</string>
-    
+
     <!-- ウィジェット名 -->
     <string name="widget_name">アイギス田園タイマー</string>
 
@@ -13,7 +13,7 @@
     <string name="time_ex_3_3">xxx/xxx</string>
     <string name="time_sub"> 後%d分</string>
     <string name="time_sub_ex"> 後xx分</string>
-    
+
     <!-- 設定画面で使用 -->
     <string name="settings_main_info">この画面の設定値はウィジェットを作るときに初期値として使用されます</string>
     <string name="stamina">スタミナ</string>
@@ -23,9 +23,10 @@
     <string name="next">次</string>
     <string name="time_denominator_2">/xx</string>
     <string name="time_denominator_3">/xxx</string>
-   	<string name="saved">保存しました</string>
-    
+    <string name="saved">保存しました</string>
     <string name="clockBackgroundDescription">clock background image</string>
     <string name="clockSetting">show clock setting dialog</string>
-    
+    <string name="title_activity_twitter">TwitterActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
