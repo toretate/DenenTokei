@@ -197,6 +197,8 @@ public class ClockWidgetSettingsActivity extends Activity {
 
 					@Override
 					public void dialogClosed( int number ) {
+						final Activity activity = ClockWidgetSettingsActivity.this;
+						saveValues( activity, m_appWidgetId, m_info );
 					}
 				} );
 				dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "charismaPicker" );
@@ -230,6 +232,8 @@ public class ClockWidgetSettingsActivity extends Activity {
 
 						@Override
 						public void dialogClosed( int number ) {
+							final Activity activity = ClockWidgetSettingsActivity.this;
+							saveValues( activity, m_appWidgetId, m_info );
 						}
 					} );
 					dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "staminaPicker" );
@@ -258,6 +262,8 @@ public class ClockWidgetSettingsActivity extends Activity {
 
 						@Override
 						public void dialogClosed( int number ) {
+							final Activity activity = ClockWidgetSettingsActivity.this;
+							saveValues( activity, m_appWidgetId, m_info );
 						}
 					} );
 					dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "staminaSubPicker" );
