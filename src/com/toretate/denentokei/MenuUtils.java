@@ -86,10 +86,12 @@ public class MenuUtils {
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
 		
+		/*
 		{	// ウィジェット
 			actionItem = menu.add( 0, MenuItemDefs.MENU_PICK_WIDGET.value, 0, "ウィジェット選択" );
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
+		*/
 		
 		/*if( ctx instanceof ClockWidgetSettingsActivity ) {
 			// 通知(通知設定はウィジェット毎に持つ)
