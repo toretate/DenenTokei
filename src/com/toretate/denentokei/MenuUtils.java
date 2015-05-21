@@ -91,11 +91,12 @@ public class MenuUtils {
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
 		
-		/*if( ctx instanceof ClockWidgetSettingsActivity ) */{
+		/*if( ctx instanceof ClockWidgetSettingsActivity ) {
 			// 通知(通知設定はウィジェット毎に持つ)
 			actionItem = menu.add( 0, MenuItemDefs.MENU_SELECT_NOTIFY.value, 0, "通知設定" );
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
+		*/
 		
 		return true;
 	}
