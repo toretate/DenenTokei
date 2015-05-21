@@ -80,5 +80,22 @@ public class WidgetAlarmUtils {
 	{
 		return URI_SCHEME.equals( intent.getScheme() );
 	}
+	
+	/**
+	 * 通知機能
+	 */
+	/*
+	static void setAlarm( Context context )
+	{
+		Calendar triggerTime = Calendar.getInstance();
+		triggerTime.add( Calendar.SECOND, 5 );	// 今から5秒後
+		
+		Intent intent = new Intent( context, Notifier.class );
+		PendingIntent sender = PendingIntent.getBroadcast( context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
+		
+		AlarmManager mng = (AlarmManager)context.getSystemService( Activity.ALARM_SERVICE );
+		mng.set( AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis(), sender );
+	}
+	*/
 
 }

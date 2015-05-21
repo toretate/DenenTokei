@@ -1,5 +1,7 @@
 package com.toretate.denentokei;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -21,6 +24,10 @@ import butterknife.InjectView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.toretate.denentokei.dialog.NumberPickerDialog;
+import com.toretate.denentokei.preset.PresetChaSta;
+import com.toretate.denentokei.preset.PresetChaStaAdapter;
+import com.toretate.denentokei.preset.PresetChaStaAdapter.PresetChaStaSelectedListener;
+import com.toretate.denentokei.preset.PresetChaStaDefs;
 
 /**
  * 各ウィジェットを設定するためのアクティビティ
@@ -46,6 +53,9 @@ public class ClockWidgetSettingsActivity extends Activity {
 	Button m_staminaSpinner;
 	@InjectView( R.id.staminaSub )
 	Button m_staminaSubSpinner;
+	
+	@InjectView( R.id.presetListView )
+	ListView m_presetListView;
 
 	@InjectView( R.id.saveButton )
 	Button m_saveButton;
@@ -90,6 +100,22 @@ public class ClockWidgetSettingsActivity extends Activity {
 		m_info.saveCurrent( this, this.m_appWidgetId, System.currentTimeMillis() );
 
 		initPrinceLvListUI();
+		
+		{	// カリスタプリセット
+			final List<PresetChaSta> list = PresetChaStaDefs.s_challenge.children;
+			
+			final PresetChaStaAdapter adapter = new PresetChaStaAdapter(this, list);
+			adapter.setButtonHandler( new PresetChaStaSelectedListener() {
+				@Override
+				public void onClick( @Nullable final PresetChaSta preset ) {
+					if( preset == null ) return;
+					final boolean needSave = true;
+					setCharisma( m_info.getCharisma() - preset.cha, needSave );
+					setStamina( m_info.getStamina() - preset.sta, needSave );
+				}
+			});
+			m_presetListView.setAdapter( adapter );
+		}
 
 		m_saveButton.setOnClickListener( new OnClickListener() {
 			@Override
@@ -190,16 +216,9 @@ public class ClockWidgetSettingsActivity extends Activity {
 				final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getCharisma(), 0, m_info.getCharismaMax() + 1, title );
 				dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
 					@Override
-					public void numberChanged( int number ) {
-						m_info.setCharisma( number );
-						button.setText( String.valueOf( m_info.getCharisma() ) );
-					}
-
+					public void numberChanged( int number ) { setCharisma( number, /*needSave*/false ); }
 					@Override
-					public void dialogClosed( int number ) {
-						final Activity activity = ClockWidgetSettingsActivity.this;
-						saveValues( activity, m_appWidgetId, m_info );
-					}
+					public void dialogClosed( int number ) { setCharisma( number, /*needSave*/true ); }
 				} );
 				dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "charismaPicker" );
 			}
@@ -225,16 +244,9 @@ public class ClockWidgetSettingsActivity extends Activity {
 					final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getStamina(), 0, m_info.getStaminaMax() + 1, title );
 					dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
 						@Override
-						public void numberChanged( int number ) {
-							m_info.setStamina( number );
-							button.setText( String.valueOf( m_info.getStamina() ) );
-						}
-
+						public void numberChanged( final int number ) { setStamina( number, /*needSave*/false ); }
 						@Override
-						public void dialogClosed( int number ) {
-							final Activity activity = ClockWidgetSettingsActivity.this;
-							saveValues( activity, m_appWidgetId, m_info );
-						}
+						public void dialogClosed( final int number ) { setStamina( number, /*needSave*/true ); }
 					} );
 					dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "staminaPicker" );
 				}
@@ -255,16 +267,9 @@ public class ClockWidgetSettingsActivity extends Activity {
 					final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getStaminaSub(), 0, 60, title );
 					dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
 						@Override
-						public void numberChanged( int number ) {
-							m_info.setStaminaSub( number );
-							button.setText( String.valueOf( m_info.getStaminaSub() ) );
-						}
-
+						public void numberChanged( final int number ) { setStaminaSub( number, /*needSave*/false ); }
 						@Override
-						public void dialogClosed( int number ) {
-							final Activity activity = ClockWidgetSettingsActivity.this;
-							saveValues( activity, m_appWidgetId, m_info );
-						}
+						public void dialogClosed( final int number ) { setStaminaSub( number, /*needSave*/true ); }
 					} );
 					dialog.show( ClockWidgetSettingsActivity.this.getFragmentManager(), "staminaSubPicker" );
 				}
@@ -281,5 +286,23 @@ public class ClockWidgetSettingsActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected( final MenuItem item ) {
 		return MenuUtils.onOptionsItemSelected( item, this );
+	}
+	
+	private void setStamina( final int stamina, final boolean needSave ) {
+		m_info.setStamina( stamina );
+		m_staminaSpinner.setText( String.valueOf( m_info.getStamina() ) );
+		if( needSave ) saveValues( this, m_appWidgetId, m_info );
+	}
+	
+	private void setStaminaSub( final int staminaSub, final boolean needSave ) {
+		m_info.setStaminaSub( staminaSub );
+		m_staminaSubSpinner.setText( String.valueOf( m_info.getStaminaSub() ) );
+		if( needSave ) saveValues( this, m_appWidgetId, m_info );
+	}
+	
+	private void setCharisma( final int charisma, final boolean needSave ) {
+		m_info.setCharisma( charisma );
+		m_charismaSpinner.setText( String.valueOf( m_info.getCharisma() ) );
+		if( needSave ) saveValues( this, m_appWidgetId, m_info );
 	}
 }

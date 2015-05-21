@@ -18,7 +18,7 @@
     <string name="settings_main_info">この画面の設定値はウィジェットを作るときに初期値として使用されます</string>
     <string name="stamina">スタミナ</string>
     <string name="charisma">カリスマ</string>
-    <string name="princeLv">王子Lv</string>
+    <string name="princeLv">王子ＬＶ</string>
     <string name="save">保存</string>
     <string name="next">次</string>
     <string name="time_denominator_2">/xx</string>
@@ -26,7 +26,6 @@
     <string name="saved">保存しました</string>
     <string name="clockBackgroundDescription">clock background image</string>
     <string name="clockSetting">show clock setting dialog</string>
-    <string name="title_activity_twitter">TwitterActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_set_notifier">通知設定</string>
 
 </resources>

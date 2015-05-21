@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 public class ClockWidget extends AppWidgetProvider
 {

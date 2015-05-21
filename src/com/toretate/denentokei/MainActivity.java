@@ -1,5 +1,9 @@
 package com.toretate.denentokei;
 
+import java.io.IOException;
+
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -18,6 +22,7 @@ import butterknife.InjectView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.toretate.denentokei.dialog.NumberPickerDialog;
+import com.toretate.denentokei.preset.PresetChaStaDefs;
 
 /**
  * 各ウィジェットを作成する際の初期値となるものを設定する
@@ -34,6 +39,14 @@ public class MainActivity extends Activity
 	@Override
 	protected void onCreate( @Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		try {
+			PresetChaStaDefs.load( this );
+		} catch( IOException e ) {
+			e.printStackTrace();
+		} catch( JSONException e ) {
+			e.printStackTrace();
+		}
 		
 		// menu
 		getWindow().requestFeature( Window.FEATURE_ACTION_BAR | Window.FEATURE_ACTION_BAR_OVERLAY );
