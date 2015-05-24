@@ -26,8 +26,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.toretate.denentokei.dialog.NumberPickerDialog;
 import com.toretate.denentokei.preset.PresetChaSta;
-import com.toretate.denentokei.preset.PresetChaStaAdapter;
-import com.toretate.denentokei.preset.PresetChaStaAdapter.PresetChaStaSelectedListener;
+import com.toretate.denentokei.preset.PresetChaStaListAdapter;
+import com.toretate.denentokei.preset.PresetChaStaListAdapter.PresetChaStaSelectedListener;
 import com.toretate.denentokei.preset.PresetChaStaDefs;
 
 /**
@@ -294,7 +294,7 @@ public class ClockWidgetSettingsActivity extends Activity {
 		}
 
 		// アダプタ設定
-		final PresetChaStaAdapter adapter = new PresetChaStaAdapter(this, list);
+		final PresetChaStaListAdapter adapter = new PresetChaStaListAdapter(this, list);
 		adapter.setButtonHandler( new PresetChaStaSelectedListener() {
 			@Override
 			public void onClick( @Nullable final PresetChaSta preset ) {

@@ -16,7 +16,7 @@ import com.toretate.denentokei.R;
  * PresetChaStaをグリッドで見せるためのアダプタ(とはいうもののListViewで見せるんだが)
  * GridLayoutだと weight 指定できないっぽいし TableLayout だと動的に追加が面倒だし Listでがむばる
  */
-public class PresetChaStaAdapter extends BaseAdapter {
+public class PresetChaStaListAdapter extends BaseAdapter {
 
 	/** ボタンクリック時のイベント拾うためのリスナ */
 	public interface PresetChaStaSelectedListener {
@@ -40,7 +40,7 @@ public class PresetChaStaAdapter extends BaseAdapter {
 		}
 	};
 	
-	public PresetChaStaAdapter( @NonNull final Context ctx, @NonNull final List<PresetChaSta> list ) {
+	public PresetChaStaListAdapter( @NonNull final Context ctx, @NonNull final List<PresetChaSta> list ) {
 		this.m_ctx = ctx;
 		this.m_list = list;
 	}

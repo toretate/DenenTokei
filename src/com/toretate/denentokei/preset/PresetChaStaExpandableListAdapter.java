@@ -31,7 +31,19 @@ public class PresetChaStaExpandableListAdapter extends BaseExpandableListAdapter
 		final PresetChaSta[] presets = PresetChaStaDefs.getPresets( ctx );
 		if( presets != null ) {
 			final List<PresetChaSta> tmp = Arrays.asList( presets );
-			if( tmp != null ) m_presets = tmp;
+			if( tmp != null ) {
+				m_presets = tmp;
+				
+				// m_selectedPresetIdsを初期更新
+				for( int groupPosition=0; groupPosition<this.getGroupCount(); groupPosition++ ) {
+					for( int childPosition=0; childPosition<this.getChildrenCount( groupPosition ); childPosition++ ) {
+						final PresetChaSta preset = getChild( groupPosition, childPosition );
+						if( preset != null && preset.isSelected ) {
+							m_selectedPresetIds.add( preset.id );
+						}
+					}
+				}
+			}
 		}
 	}
 	
