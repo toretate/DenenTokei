@@ -1,5 +1,8 @@
 package com.toretate.denentokei;
 
+
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.io.IOException;
 
 import org.json.JSONException;
@@ -39,6 +42,7 @@ public class MainActivity extends Activity
 	@Override
 	protected void onCreate( @Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Fabric.with(this, new Crashlytics());
 		
 		try {
 			PresetChaStaDefs.load( this );
@@ -61,7 +65,7 @@ public class MainActivity extends Activity
 											.addTestDevice("66F8796DEDCDF99B7B8EFED91381216C")
 											.build();
 		m_adView.loadAd(adRequest);
-
+		
 		// 初期値設定
 		m_info = ClockInfo.loadWidgetCreateValues( this );
 		ClockInfo.saveWidgetCreateValues( this, m_info );

@@ -1,5 +1,7 @@
 package com.toretate.denentokei;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
@@ -38,6 +40,8 @@ public class ClockWidgetSettingsActivity extends Activity {
 
 	int m_appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID; // !< ウィジェットのIDの基
 	boolean m_fromWidgetSettingButton; // !< ウィジェットの設定ボタンから来たかどうか
+	
+	private static final int START_PRESET_EDIT = 1000;
 
 	@InjectView( R.id.princeLvSpinner )
 	Button m_princeLvSpinner;
@@ -101,21 +105,7 @@ public class ClockWidgetSettingsActivity extends Activity {
 
 		initPrinceLvListUI();
 		
-		{	// カリスタプリセット
-			final List<PresetChaSta> list = PresetChaStaDefs.s_challenge.children;
-			
-			final PresetChaStaAdapter adapter = new PresetChaStaAdapter(this, list);
-			adapter.setButtonHandler( new PresetChaStaSelectedListener() {
-				@Override
-				public void onClick( @Nullable final PresetChaSta preset ) {
-					if( preset == null ) return;
-					final boolean needSave = true;
-					setCharisma( m_info.getCharisma() - preset.cha, needSave );
-					setStamina( m_info.getStamina() - preset.sta, needSave );
-				}
-			});
-			m_presetListView.setAdapter( adapter );
-		}
+		initPresetChaStaList();
 
 		m_saveButton.setOnClickListener( new OnClickListener() {
 			@Override
@@ -147,8 +137,19 @@ public class ClockWidgetSettingsActivity extends Activity {
 				}
 			}
 		} );
-		;
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult( requestCode, resultCode, data );
+		switch( requestCode ) {
+		case START_PRESET_EDIT:
+			initPresetChaStaList();
+			break;
+		default:
+			break;
+		}
+	};
 
 	@Override
 	protected void onPause() {
@@ -276,6 +277,41 @@ public class ClockWidgetSettingsActivity extends Activity {
 			} );
 		}
 
+	}
+	
+	private void initPresetChaStaList() {
+		// カリスタプリセット
+		
+		// 選択されている項目のみを表示するため、フィルタリング
+		PresetChaSta[] presets = PresetChaStaDefs.getPresets( this );
+		final ArrayList<PresetChaSta> list = new ArrayList<PresetChaSta>();
+		if( presets != null ) {
+			for( PresetChaSta preset : presets ) {
+				List<PresetChaSta> children = preset.children;
+				for( PresetChaSta child : children ) {
+					if( child.isSelected ) list.add( child );
+				}
+			}
+		}
+
+		// アダプタ設定
+		final PresetChaStaAdapter adapter = new PresetChaStaAdapter(this, list);
+		adapter.setButtonHandler( new PresetChaStaSelectedListener() {
+			@Override
+			public void onClick( @Nullable final PresetChaSta preset ) {
+				if( preset != null ) {
+					final boolean needSave = true;
+					setCharisma( m_info.getCharisma() - preset.cha, needSave );
+					setStamina( m_info.getStamina() - preset.sta, needSave );
+				} else {
+					// つまり”＋”のとき
+					Intent intent = new Intent( ClockWidgetSettingsActivity.this, EditPresetChaStaListActivity.class );
+					ClockWidgetSettingsActivity.this.startActivityForResult( intent, START_PRESET_EDIT );
+				}
+			}
+		});
+		m_presetListView.setAdapter( adapter );
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override

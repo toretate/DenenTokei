@@ -27,5 +27,7 @@
     <string name="clockBackgroundDescription">clock background image</string>
     <string name="clockSetting">show clock setting dialog</string>
     <string name="title_activity_set_notifier">通知設定</string>
+    <string name="title_activity_edit_preset_cha_sta_list">EditPresetChaStaListActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

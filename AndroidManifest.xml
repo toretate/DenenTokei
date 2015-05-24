@@ -76,7 +76,15 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info_2x1" />
         </receiver>
-
+        
+        <!-- カリスタ消費ボタン一覧の編集用アクティビティ -->
+        <activity
+            android:name=".EditPresetChaStaListActivity"
+            android:label="@string/title_activity_edit_preset_cha_sta_list" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ClockWidgetSettingActivity" />
+        </activity>
 	    <meta-data
             android:name="io.fabric.ApiKey"
             android:value="633df2ca80cd22201b9d833a4b5715d7cc95f952" />
