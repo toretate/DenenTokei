@@ -99,12 +99,12 @@ public class MenuUtils {
 			actionItem = menu.add( 0, MenuItemDefs.MENU_SELECT_NOTIFY.value, 0, "通知設定" );
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
-		{
+		*/
+		if( BuildConfig.DEBUG ) {
 			// CrashLytics
 			actionItem = menu.add( 0, MenuItemDefs.MENU_TEST_CRASHLYTICS.value, 0, "＊Test ClashLytics" );
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
-		*/
 		
 		return true;
 	}
@@ -189,10 +189,10 @@ public class MenuUtils {
 //			}
 			break;
 		}
+		*/
 		case MENU_TEST_CRASHLYTICS:
 			Crashlytics.getInstance().crash();
 			break;
-		*/
 		case UNDEFINED:
 		default:
 			break;

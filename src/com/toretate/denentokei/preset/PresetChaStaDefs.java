@@ -3,7 +3,6 @@ package com.toretate.denentokei.preset;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +24,7 @@ public class PresetChaStaDefs {
     private static final String PREFS_NAME = "com.toretate.denentokei.preset.PresetChaStaDefs";
 	
 	private static PresetChaStaDefs s_instance;
-	public static PresetChaStaDefs getInstance( final Context ctx ) {
+	public static PresetChaStaDefs getInstance( final @NonNull Context ctx ) {
 		if( s_instance == null ) {
 			s_instance = new PresetChaStaDefs();
 			try {
@@ -49,7 +48,7 @@ public class PresetChaStaDefs {
 	
 	private static @Nullable PresetChaSta[] s_presets;
 	
-	public static @Nullable PresetChaSta[] getPresets( final Context ctx ) {
+	public static @Nullable PresetChaSta[] getPresets( final @NonNull Context ctx ) {
 		getInstance( ctx );
 		return s_presets;
 	}

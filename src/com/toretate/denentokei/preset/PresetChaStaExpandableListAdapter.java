@@ -9,8 +9,6 @@ import java.util.Set;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -26,11 +24,9 @@ public class PresetChaStaExpandableListAdapter extends BaseExpandableListAdapter
 	private @NonNull Set<Integer> m_selectedPresetIds = new HashSet<Integer>();
 	
 	private @NonNull Context m_ctx;
-	private @Nullable LayoutInflater m_inf;
 	
 	public PresetChaStaExpandableListAdapter( final @NonNull Activity ctx ) {
 		m_ctx = ctx;
-		m_inf = ctx.getLayoutInflater();
 		
 		final PresetChaSta[] presets = PresetChaStaDefs.getPresets( ctx );
 		if( presets != null ) {
@@ -65,7 +61,7 @@ public class PresetChaStaExpandableListAdapter extends BaseExpandableListAdapter
 		if( convertView != null ) {
 			holder = (PresetChaStaAdapterHolder)convertView.getTag();
 		} else {
-			convertView = m_inf.inflate( R.layout.preset_cha_sta_listitem_toggle, null );
+			convertView = View.inflate( m_ctx, R.layout.preset_cha_sta_listitem_toggle, null );
 			if( convertView == null ) return new View( m_ctx );
 			
 			holder = new PresetChaStaAdapterHolder( convertView );
@@ -157,7 +153,7 @@ public class PresetChaStaExpandableListAdapter extends BaseExpandableListAdapter
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		if( convertView == null ) {
-			convertView = m_inf.inflate( R.layout.edit_preset_cha_sta_list_group_item, null );
+			convertView = View.inflate( m_ctx, R.layout.edit_preset_cha_sta_list_group_item, null );
 		}
 		
 		PresetChaSta group = getGroup( groupPosition );

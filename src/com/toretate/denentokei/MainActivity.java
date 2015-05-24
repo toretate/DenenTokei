@@ -136,6 +136,7 @@ public class MainActivity extends Activity
 
 	@Override
 	public boolean onCreateOptionsMenu( final Menu menu ) {
+		if( menu == null ) return false;
 		return MenuUtils.onCreateOptionsMenu( menu, this );
 	}
 

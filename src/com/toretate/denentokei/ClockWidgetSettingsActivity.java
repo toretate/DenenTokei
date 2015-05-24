@@ -1,7 +1,6 @@
 package com.toretate.denentokei;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
@@ -316,6 +315,7 @@ public class ClockWidgetSettingsActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu( final Menu menu ) {
+		if( menu == null ) return false;
 		return MenuUtils.onCreateOptionsMenu( menu, this );
 	}
 
