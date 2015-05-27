@@ -83,7 +83,7 @@ public class MenuUtils {
 		
 		{
 			// PresetChasta
-			actionItem = menu.add( 0, MenuItemDefs.MENU_SELECT_PRESET.value, 0, "カリスタ消費編集" );
+			actionItem = menu.add( 0, MenuItemDefs.MENU_SELECT_PRESET.value, 0, "カリスタ一覧設定" );
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
 		
@@ -110,32 +110,32 @@ public class MenuUtils {
 	}
 
 	public static boolean onOptionsItemSelected( final MenuItem item, final Context ctx ) {
-		MenuItemDefs defs = MenuItemDefs.create( item.getItemId() );
+		final MenuItemDefs defs = MenuItemDefs.create( item.getItemId() );
 		Intent intent;
 
 		switch( defs ) {
 		case MENU_SELECT_RUN_IGIS: {
-			PackageManager pm = ctx.getPackageManager();
+			final PackageManager pm = ctx.getPackageManager();
 			intent = pm.getLaunchIntentForPackage( AIGIS_PKG_NAME );
 			ctx.startActivity( intent );
 			break;
 		}
 		case MENU_SELECT_RUN_IGIS_R: {
-			PackageManager pm = ctx.getPackageManager();
+			final PackageManager pm = ctx.getPackageManager();
 			intent = pm.getLaunchIntentForPackage( AIGIS_R_PKG_NAME );
 			ctx.startActivity( intent );
 			break;
 		}
 		case MENU_SELECT_TWITTER:
 		{
-			Uri uri = Uri.parse( "https://twitter.com/Aigis1000/" );
+			final Uri uri = Uri.parse( "https://twitter.com/Aigis1000/" );
 			intent = new Intent( Intent.ACTION_VIEW, uri );
 			ctx.startActivity( intent );
 			break;
 		}
 		case MENU_SELECT_TWITTER_HASHTAG:
 		{
-			Uri uri = Uri.parse( "https://twitter.com/search?q=%23%E5%8D%83%E5%B9%B4%E6%88%A6%E4%BA%89%E3%82%A2%E3%82%A4%E3%82%AE%E3%82%B9&src=hash" );
+			final Uri uri = Uri.parse( "https://twitter.com/search?q=%23%E5%8D%83%E5%B9%B4%E6%88%A6%E4%BA%89%E3%82%A2%E3%82%A4%E3%82%AE%E3%82%B9&src=hash" );
 			intent = new Intent( Intent.ACTION_VIEW, uri );
 			ctx.startActivity( intent );
 			break;

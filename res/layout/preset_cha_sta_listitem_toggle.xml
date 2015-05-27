@@ -3,22 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:background="#E3BE88"
+    >
     
-    <ToggleButton
+    <CheckBox
         android:id="@+id/cha_sta_item1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="12sp"
         />
-    <ToggleButton
+    <CheckBox
         android:id="@+id/cha_sta_item2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="12sp"
         />
+    <!-- 
 	<ToggleButton
         android:id="@+id/cha_sta_item3"
         android:layout_width="0dp"
@@ -26,5 +29,5 @@
         android:layout_weight="1"
         android:textSize="12sp"
         />
-    
+     -->
 </LinearLayout>

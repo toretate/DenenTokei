@@ -1,10 +1,13 @@
 package com.toretate.denentokei.preset;
 
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -90,8 +93,11 @@ public class PresetChaStaListAdapter extends BaseAdapter {
 			final String text;
 			final int visibility;
 			if( item != null ) {
-				text = item.name_short;
+				final Spanned spanned = Html.fromHtml( String.format( Locale.getDefault(), "<big>%s</big><br /><small>Sta:%2d Cha:%3d</small>", item.name_short, item.sta, item.cha ) );
 				visibility = View.VISIBLE;
+				if( button != null ) {
+					button.setText( spanned );
+				}
 			} else {
 				if( showAddButton ) {
 					text = "";
@@ -101,14 +107,27 @@ public class PresetChaStaListAdapter extends BaseAdapter {
 					visibility = View.VISIBLE;
 				}
 				showAddButton = true;
+				
+				if( button != null ) {
+					button.setText( text );
+				}
 			}
 			
-			button.setVisibility( visibility );
-			button.setText( text );
-			button.setOnClickListener( m_innerListener );
-			button.setTag( position_real +i );
+			if( button != null ) {
+				button.setVisibility( visibility );
+				button.setOnClickListener( m_innerListener );
+				button.setTag( position_real +i );
+			}
 		}
 		
 		return convertView;
+	}
+	
+	public void replace( final @NonNull List<PresetChaSta> list ) {
+		m_list.clear();
+		for( PresetChaSta preset : list ) {
+			m_list.add( preset );
+		}
+		this.notifyDataSetChanged();
 	}
 }

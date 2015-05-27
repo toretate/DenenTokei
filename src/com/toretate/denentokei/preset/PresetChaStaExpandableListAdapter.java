@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.toretate.denentokei.R;
 
@@ -65,8 +69,7 @@ public class PresetChaStaExpandableListAdapter extends BaseExpandableListAdapter
 	}
 
 	@Override
-	public View getChildView(int groupPosition, int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView( final int groupPosition, final int childPosition, final boolean isLastChild, @Nullable View convertView, final @Nullable ViewGroup parent) {
 		PresetChaStaAdapterHolder holder;
 		final int position_real = childPosition * PresetChaStaAdapterHolder.s_cols;
 
@@ -80,46 +83,57 @@ public class PresetChaStaExpandableListAdapter extends BaseExpandableListAdapter
 			convertView.setTag( holder );
 		}
 		
-		PresetChaSta group = getGroup( groupPosition );
+		final PresetChaSta group = getGroup( groupPosition );
 		if( group == null ) return convertView;
 		
 		for( int i=0; i<PresetChaStaAdapterHolder.s_cols; i++ ) {
 			final PresetChaSta item = getChild( groupPosition, position_real +i );
 			
-			final ToggleButton button = (ToggleButton)holder.get( i );
+			final CheckBox button = (CheckBox)holder.get( i );
 			final String text;
 			final int visibility;
 			if( item != null ) {
 				text = item.name_short;
 				visibility = View.VISIBLE;
-				button.setChecked( item.isSelected );
+				final Spanned spanned = Html.fromHtml( String.format( Locale.getDefault(), "<big>%s</big><br /><small>Sta:%2d Cha:%3d</small>", item.name_short, item.sta, item.cha ) );
+				if( button != null ) {
+					button.setChecked( item.isSelected );
+					button.setText( spanned );
+				}
 			} else {
 				text = "";
-				visibility = View.INVISIBLE;
-				button.setChecked( false );
+				visibility = View.GONE;
+				if( button != null ) {
+					button.setChecked( false );
+					button.setText( text );
+				}
 			}
 			
-			button.setVisibility( visibility );
-			button.setText( text );
-			button.setTextOff( text );
-			button.setTextOn( text );
-			button.setOnClickListener( new OnClickListener() {
-				@Override
-				public void onClick( View v ) {
-					final PresetChaSta preset = (PresetChaSta)v.getTag();
-					if( preset.isSelected ) {
-						m_selectedPresetIds.remove( preset.id );
-						preset.isSelected = false;
-					} else {
-						m_selectedPresetIds.add( preset.id );
-						preset.isSelected = true;
+			if( button != null ) {
+				button.setVisibility( visibility );
+				button.setOnClickListener( new OnClickListener() {
+					@Override
+					public void onClick( final @Nullable View v ) {
+						if( v == null
+							|| ( v instanceof CheckBox ) == false
+							|| ( v.getTag() instanceof PresetChaSta == false )
+							) return;
+						
+						final PresetChaSta preset = (PresetChaSta)(v.getTag());
+						if( preset.isSelected ) {
+							m_selectedPresetIds.remove( preset.id );
+							preset.isSelected = false;
+						} else {
+							m_selectedPresetIds.add( preset.id );
+							preset.isSelected = true;
+						}
+						((CheckBox)v).setChecked( preset.isSelected );
+						
+						PresetChaStaDefs.save( m_ctx, m_selectedPresetIds );
 					}
-					((ToggleButton)v).setChecked( preset.isSelected );
-					
-					PresetChaStaDefs.save( m_ctx, m_selectedPresetIds );
-				}
-			} );
-			button.setTag( item );
+				} );
+				button.setTag( item );
+			}
 		}
 		
 		

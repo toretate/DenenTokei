@@ -13,6 +13,7 @@
         android:textSize="12sp"
         style="?android:attr/buttonStyle"
         />
+    
     <Button
         android:id="@+id/cha_sta_item2"
         android:layout_width="0dp"
@@ -21,7 +22,8 @@
         android:textSize="12sp"
         style="?android:attr/buttonStyle"
         />
-	<Button
+    <!-- 
+ 	<Button
         android:id="@+id/cha_sta_item3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -29,5 +31,6 @@
         android:textSize="12sp"
         style="?android:attr/buttonStyle"
         />
+     -->
     
 </LinearLayout>

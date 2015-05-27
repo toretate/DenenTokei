@@ -282,35 +282,41 @@ public class ClockWidgetSettingsActivity extends Activity {
 		// カリスタプリセット
 		
 		// 選択されている項目のみを表示するため、フィルタリング
-		PresetChaSta[] presets = PresetChaStaDefs.getPresets( this );
 		final ArrayList<PresetChaSta> list = new ArrayList<PresetChaSta>();
-		if( presets != null ) {
-			for( PresetChaSta preset : presets ) {
-				List<PresetChaSta> children = preset.children;
-				for( PresetChaSta child : children ) {
-					if( child.isSelected ) list.add( child );
+		{
+			final PresetChaSta[] presets = PresetChaStaDefs.getPresets( this );
+			if( presets != null ) {
+				for( PresetChaSta preset : presets ) {
+					final List<PresetChaSta> children = preset.children;
+					for( PresetChaSta child : children ) {
+						if( child.isSelected ) list.add( child );
+					}
 				}
 			}
 		}
 
 		// アダプタ設定
-		final PresetChaStaListAdapter adapter = new PresetChaStaListAdapter(this, list);
-		adapter.setButtonHandler( new PresetChaStaSelectedListener() {
-			@Override
-			public void onClick( @Nullable final PresetChaSta preset ) {
-				if( preset != null ) {
-					final boolean needSave = true;
-					setCharisma( m_info.getCharisma() - preset.cha, needSave );
-					setStamina( m_info.getStamina() - preset.sta, needSave );
-				} else {
-					// つまり”＋”のとき
-					Intent intent = new Intent( ClockWidgetSettingsActivity.this, EditPresetChaStaListActivity.class );
-					ClockWidgetSettingsActivity.this.startActivityForResult( intent, START_PRESET_EDIT );
+		PresetChaStaListAdapter adapter = (PresetChaStaListAdapter)m_presetListView.getAdapter();
+		if( adapter == null ) {
+			adapter = new PresetChaStaListAdapter(this, list);
+			adapter.setButtonHandler( new PresetChaStaSelectedListener() {
+				@Override
+				public void onClick( @Nullable final PresetChaSta preset ) {
+					if( preset != null ) {
+						final boolean needSave = true;
+						setCharisma( m_info.getCharisma() - preset.cha, needSave );
+						setStamina( m_info.getStamina() - preset.sta, needSave );
+					} else {
+						// つまり”＋”のとき
+						Intent intent = new Intent( ClockWidgetSettingsActivity.this, EditPresetChaStaListActivity.class );
+						ClockWidgetSettingsActivity.this.startActivityForResult( intent, START_PRESET_EDIT );
+					}
 				}
-			}
-		});
-		m_presetListView.setAdapter( adapter );
-		adapter.notifyDataSetChanged();
+			});
+			m_presetListView.setAdapter( adapter );
+		} else {
+			adapter.replace( list );
+		}
 	}
 
 	@Override
