@@ -80,16 +80,21 @@ public class PresetChaStaDefs {
 				}
 			}
 		}
-		
-		s_story = new PresetChaSta( json, "ストーリーミッション", selectedIds );
-		s_challenge = new PresetChaSta( json, "チャレンジ", selectedIds );
-		s_daily = new PresetChaSta( json, "曜日ミッション", selectedIds );
-		s_awaikening = new PresetChaSta( json, "覚醒ミッション", selectedIds );
-		s_urgency = new PresetChaSta( json, "緊急ミッション", selectedIds );
-		s_expedition = new PresetChaSta( json, "大討伐", selectedIds );
-		s_reprint = new PresetChaSta( json, "復刻", selectedIds );
+
+		Set<Integer> deActivatedSelectedIds = new HashSet<Integer>();	// activate=false になった selectedId群
+		s_story = new PresetChaSta( json, "ストーリーミッション", selectedIds, deActivatedSelectedIds );
+		s_challenge = new PresetChaSta( json, "チャレンジ", selectedIds, deActivatedSelectedIds );
+		s_daily = new PresetChaSta( json, "曜日ミッション", selectedIds, deActivatedSelectedIds );
+		s_awaikening = new PresetChaSta( json, "覚醒ミッション", selectedIds, deActivatedSelectedIds );
+		s_urgency = new PresetChaSta( json, "緊急ミッション", selectedIds, deActivatedSelectedIds );
+		s_expedition = new PresetChaSta( json, "大討伐", selectedIds, deActivatedSelectedIds );
+		s_reprint = new PresetChaSta( json, "復刻", selectedIds, deActivatedSelectedIds );
 		
 		s_presets = new PresetChaSta[]{ s_story, s_challenge, s_daily, s_awaikening, s_urgency, s_expedition, s_reprint };
+		
+		// 差を保存
+		selectedIds.removeAll( deActivatedSelectedIds );
+		save( ctx, selectedIds);
 	}
 	
 	public static void save( @NonNull final Context ctx, final @NonNull Set<Integer> selectedPresetIds ) {

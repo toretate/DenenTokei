@@ -33,18 +33,22 @@ public class PresetChaSta implements Serializable {
 	/** @serial */
 	public boolean isSelected = false;			//!< 選択状態かどうか
 	
+	/** @serial */
+	public boolean isActive = false;			//!< true:現在開催中なので表示する false:開催終了したので非表示
+	
 	@NonNull public final List<PresetChaSta> children;
 	
-	public PresetChaSta( final int id, @NonNull final String name, final int cha, final int sta ) {
+	public PresetChaSta( final int id, @NonNull final String name, final int cha, final int sta, final boolean isActive ) {
 		this.id = id;
 		this.name_long = name;
 		this.name_short = name;
 		this.cha = cha;
 		this.sta = sta;
 		this.children = new ArrayList<PresetChaSta>();
+		this.isActive = isActive;
 	}
 	
-	public PresetChaSta( final @NonNull JSONArray entry, final @NonNull Set<Integer> selectedIds ) throws JSONException {
+	public PresetChaSta( final @NonNull JSONArray entry, final @NonNull Set<Integer> selectedIds, final @NonNull Set<Integer> deActivatedSelectedIds ) throws JSONException {
 		int i = 0;
 		
 		this.id = entry.getInt(i);
@@ -68,17 +72,25 @@ public class PresetChaSta implements Serializable {
 		
 		this.children = new ArrayList<PresetChaSta>();
 		
+		this.isActive = entry.getBoolean( i );
+		i++;
+		
 		if( selectedIds.contains( this.id ) ) {
-			this.isSelected = true;
+			if( this.isActive ) {
+				this.isSelected = true;
+			} else {
+				deActivatedSelectedIds.add( this.id );
+			}
 		}
 	}
 	
-	public PresetChaSta( final @NonNull JSONObject obj, final @NonNull String name, final @NonNull Set<Integer> selectedIds ) throws JSONException {
+	public PresetChaSta( final @NonNull JSONObject obj, final @NonNull String name, final @NonNull Set<Integer> selectedIds, final @NonNull Set<Integer> deActivatedSelectedIds ) throws JSONException {
 		this.id = -1;
 		this.name_long = name;
 		this.name_short = name;
 		this.cha = 0;
 		this.sta = 0;
+		this.isActive = true;
 		
 		final JSONObject child = obj.optJSONObject( name );
 		if( child == null ) throw new JSONException( "child:" +name +" is not found" );
@@ -99,14 +111,24 @@ public class PresetChaSta implements Serializable {
 				
 				for( int i=0; i<array.length(); i++ ) {
 					final JSONArray childArray = array.getJSONArray(i);
-					if( childArray != null ) children.add( new PresetChaSta( childArray, selectedIds ) );
+					if( childArray != null ) {
+						final PresetChaSta childArrayItem = new PresetChaSta( childArray, selectedIds, deActivatedSelectedIds );
+						if( childArrayItem.isActive ) {
+							children.add( childArrayItem );
+						}
+					}
 				}
 			}
 		} else if( type != null && type.equals( "array" ) ) {
 			final JSONArray array = child.getJSONArray( "array" );
 			for( int i=0; i<array.length(); i++ ) {
 				final JSONArray childArray = array.getJSONArray(i);
-				if( childArray != null ) children.add( new PresetChaSta( childArray, selectedIds ) );
+				if( childArray != null ) {
+					final PresetChaSta childArrayItem = new PresetChaSta( childArray, selectedIds, deActivatedSelectedIds );
+					if( childArrayItem.isActive ) {
+						children.add( childArrayItem );
+					}
+				}
 			}
 		}
 		this.children = children;
