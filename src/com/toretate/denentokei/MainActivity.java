@@ -2,13 +2,17 @@ package com.toretate.denentokei;
 
 
 import com.crashlytics.android.Crashlytics;
+
 import io.fabric.sdk.android.Fabric;
+
 import java.io.IOException;
 
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +39,8 @@ public class MainActivity extends Activity
 	@NonNull ClockInfo m_info = new ClockInfo();
 	
 	@InjectView(R.id.princeLvSpinner) Button m_princeLvSpinner;
+	
+	@InjectView(R.id.showGoogle) Button m_showGoogle;
 	
 	@InjectView(R.id.adView) AdView m_adView;
 	
@@ -71,6 +77,15 @@ public class MainActivity extends Activity
 		ClockInfo.saveWidgetCreateValues( this, m_info );
 		
 		initPrinceLvListUI();
+		
+		m_showGoogle.setOnClickListener( new OnClickListener() {
+			@Override
+			public void onClick( View v ) {
+				Intent intent = new Intent( Intent.ACTION_WEB_SEARCH );
+				intent.putExtra( SearchManager.QUERY, "ホームにウィジェット登録" );
+				startActivity( intent );
+			}
+		} );
 		
 		setResult( RESULT_OK );
 	}
