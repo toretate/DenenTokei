@@ -6,6 +6,7 @@
     android:minHeight="40dp"
     android:initialLayout="@layout/widget_2x1"
     android:configure="com.toretate.denentokei.ClockWidgetSettingsActivity"
+    android:resizeMode="horizontal|vertical"
     >
     
 
