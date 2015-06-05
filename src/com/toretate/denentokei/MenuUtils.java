@@ -100,11 +100,13 @@ public class MenuUtils {
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
 		*/
+		/*
 		if( BuildConfig.DEBUG ) {
 			// CrashLytics
 			actionItem = menu.add( 0, MenuItemDefs.MENU_TEST_CRASHLYTICS.value, 0, "＊Test ClashLytics" );
 			actionItem.setShowAsAction( MenuItem.SHOW_AS_ACTION_NEVER );
 		}
+		*/
 		
 		return true;
 	}
