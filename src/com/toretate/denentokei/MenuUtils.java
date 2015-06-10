@@ -1,5 +1,6 @@
 package com.toretate.denentokei;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -44,8 +45,12 @@ public class MenuUtils {
 			return UNDEFINED;
 		}
 	}
-
+	
 	public static boolean onCreateOptionsMenu( @NonNull final Menu menu, @NonNull final Context ctx ) {
+		return onCreateOptionsMenu( menu, ctx, AppWidgetManager.INVALID_APPWIDGET_ID );
+	}
+
+	public static boolean onCreateOptionsMenu( @NonNull final Menu menu, @NonNull final Context ctx, final int appWidgetId ) {
 		final PackageManager pm = ctx.getPackageManager();
 
 		MenuItem actionItem;

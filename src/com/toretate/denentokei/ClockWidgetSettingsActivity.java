@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -24,6 +25,7 @@ import butterknife.InjectView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.toretate.denentokei.FontSetting.FontSettingType;
 import com.toretate.denentokei.dialog.NumberPickerDialog;
 import com.toretate.denentokei.preset.PresetChaSta;
 import com.toretate.denentokei.preset.PresetChaStaListAdapter;
@@ -36,6 +38,9 @@ import com.toretate.denentokei.preset.PresetChaStaDefs;
 public class ClockWidgetSettingsActivity extends Activity {
 	@NonNull
 	ClockInfo m_info = new ClockInfo();
+	
+	@Nullable
+	WidgetLayoutInfo m_layoutInfo;
 
 	int m_appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID; // !< ウィジェットのIDの基
 	boolean m_fromWidgetSettingButton; // !< ウィジェットの設定ボタンから来たかどうか
@@ -57,6 +62,9 @@ public class ClockWidgetSettingsActivity extends Activity {
 	@InjectView( R.id.staminaSub )
 	Button m_staminaSubSpinner;
 	
+//	@InjectView( R.id.setting_widget_layout_button )
+	ImageButton m_widgetLayoutButton;
+	
 	@InjectView( R.id.presetListView )
 	ListView m_presetListView;
 
@@ -65,7 +73,7 @@ public class ClockWidgetSettingsActivity extends Activity {
 
 	@InjectView( R.id.adView )
 	AdView m_adView;
-
+	
 	@Override
 	protected void onCreate( @Nullable final Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
@@ -136,6 +144,15 @@ public class ClockWidgetSettingsActivity extends Activity {
 				}
 			}
 		} );
+		
+		// cha, sta 文字列のレイアウト設定
+		{
+			WidgetLayoutInfo info = new WidgetLayoutInfo( this, this.m_appWidgetId );
+			info.getTextLayoutInfo( FontSettingType.Cha ).load();
+			info.getTextLayoutInfo( FontSettingType.Sta ).load();
+			
+			m_layoutInfo = info;
+		}
 	}
 	
 	@Override
@@ -196,6 +213,17 @@ public class ClockWidgetSettingsActivity extends Activity {
 
 		initCharismaUI();
 		initStaminaUI();
+
+		if( m_widgetLayoutButton != null ) {
+			m_widgetLayoutButton.setOnClickListener( new OnClickListener() {
+				@Override
+				public void onClick( final View v ) {
+					Intent intent = new Intent( ClockWidgetSettingsActivity.this, WidgetLayoutEditActivity.class );
+					intent.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, m_appWidgetId );
+					ClockWidgetSettingsActivity.this.startActivityForResult( intent, START_PRESET_EDIT );
+				}
+			} );
+		}
 	}
 
 	static void saveValues( @NonNull final Context context, int appWidgetId, @NonNull final ClockInfo info ) {
@@ -322,7 +350,7 @@ public class ClockWidgetSettingsActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu( final Menu menu ) {
 		if( menu == null ) return false;
-		return MenuUtils.onCreateOptionsMenu( menu, this );
+		return MenuUtils.onCreateOptionsMenu( menu, this, m_appWidgetId );
 	}
 
 	@Override

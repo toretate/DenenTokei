@@ -2,46 +2,69 @@ package com.toretate.denentokei;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLayoutChangeListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.toretate.denentokei.dialog.FontFamilyDialog;
 import com.toretate.denentokei.dialog.FontFamilyDialog.FontFamilyChangedListener;
-import com.toretate.denentokei.dialog.FontSizeDialog;
-import com.toretate.denentokei.dialog.FontSizeDialog.FontSizeChangedListener;
+import com.toretate.denentokei.dialog.NumberPickerDialog;
+import com.toretate.denentokei.dialog.NumberPickerDialog.NumberChangedListener;
 
 public class FontSetting {
 	
-	Button m_fontFamilyButton;
-	String m_fontFamily;
+    enum FontSettingType {
+    	Sta("Sta"), Cha("Cha"), ;
+    	final @NonNull String typeString;
+    	FontSettingType( final @NonNull String typeString ) { this.typeString = typeString; }
+    }
+    private final @NonNull FontSettingType m_type;
 	
-	Button m_fontSizeButton;
-	int m_fontSize;
+	private final WidgetLayoutInfo.WidgetTextLayoutInfo m_textInfo;	// モデル
 	
-	TextView m_clock;
-	DandDListener m_listener;
-	GestureDetector m_gesture;
+	private final @NonNull Button m_fontFamilyButton;
+	private final @NonNull Button m_fontSizeButton;
+	private final @NonNull TextView m_textView;
 	
-	public FontSetting( int fontFamilyButton, int fontSizeButton, final int clock, final Activity parent ) {
-		m_fontFamilyButton = (Button)parent.findViewById( fontFamilyButton );
-		m_fontFamily = "serif";
+	private final @NonNull DandDListener m_listener;
+	private final @NonNull GestureDetector m_gesture;
+	
+	
+	public FontSetting( final @NonNull Button fontFamilyButton, final @NonNull Button fontSizeButton, final @NonNull TextView textView, final Activity parent, final @NonNull FontSettingType type, final WidgetLayoutInfo info ) {
+		m_type = type;
+		m_textInfo = info.getTextLayoutInfo( m_type );
 		
-		m_fontSizeButton = (Button)parent.findViewById( fontSizeButton );
-		m_fontSize = 10;	// 10sp
+		m_fontFamilyButton = fontFamilyButton;
+		m_fontSizeButton = fontSizeButton;
 		
-		m_clock = (TextView)parent.findViewById( clock );
-		m_listener = new DandDListener( m_clock );
+		m_textView = textView;
+		m_textView.addOnLayoutChangeListener( new OnLayoutChangeListener() {
+			// D&Dのdropを監視
+			@Override
+			public void onLayoutChange( View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom ) {
+				if( left == oldLeft && top == oldTop ) return;
+				if( m_textView != v ) return;
+				
+				if( m_textInfo.textViewMarginL == left && m_textInfo.textViewMarginT == top ) return;	// 変化無し
+
+				m_textInfo.textViewMarginL = left;
+				m_textInfo.textViewMarginT = top;
+				m_textInfo.save();
+			}
+		} );
+		
+		m_listener = new DandDListener( textView );
 		m_gesture = new GestureDetector( parent, m_listener );
-		m_clock.setOnTouchListener( new OnTouchListener() {
+		m_textView.setOnTouchListener( new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				m_gesture.onTouchEvent( event );
-				return false;
+				return m_gesture.onTouchEvent( event );
 			}
 		});
 		
@@ -49,16 +72,20 @@ public class FontSetting {
 		setupFontSizeButton( parent );
 	}
 	
+	public void resetView() {
+		m_textInfo.resetView( m_textView );
+	}
+	
 	private void setupFontFamilyButton( final Activity activity ) {
 		m_fontFamilyButton.setOnClickListener( new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				
-				FontFamilyDialog dialog = new FontFamilyDialog( m_fontFamily );
+				final FontFamilyDialog dialog = new FontFamilyDialog( m_textInfo.fontName );
 				dialog.setFontFamilyChangedListener( new FontFamilyChangedListener() {
 					@Override
 					public void fontFamilyChanged(String family) {
-						setFontFamily( family );
+						setFontFamily( family != null ? family : WidgetLayoutInfo.DEF_FONT_FAMILY );
 					}
 				});
 				dialog.show( activity.getFragmentManager(), "fontFamily" );
@@ -69,31 +96,40 @@ public class FontSetting {
 	private void setupFontSizeButton( final Activity activity ) {
 		m_fontSizeButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				FontSizeDialog dialog = new FontSizeDialog( m_fontSize );
-				dialog.setFontSizeChangedListener( new FontSizeChangedListener() {
+			public void onClick( final View v ) {
+				final NumberPickerDialog dialog = new NumberPickerDialog( m_textInfo.fontSize, 1, 54, "フォントサイズ" );
+				dialog.setNumberChangedListener( new NumberChangedListener() {
 					@Override
-					public void fontSizeChanged(int size) {
-						setFontSize( size );
+					public void numberChanged( int number ) {
+						setFontSize( number );
 					}
-				});
-				dialog.show( activity.getFragmentManager(), "fontSizePicker" );
+					
+					@Override
+					public void dialogClosed( int number ) {
+						setFontSize( number );
+					}
+				} );
+				dialog.show( activity.getFragmentManager(), "FontSizePicker" );
 			}
 		});
 	}
 	
-	private void setFontFamily( final String family ) {
-		m_fontFamily = family;
+	private void setFontFamily( final @NonNull String family ) {
+		if( m_textInfo.fontName.equals( family ) == false ) {
+			m_textInfo.fontName = family;
+			m_textInfo.save();
+		}
 		m_fontFamilyButton.setText( family );
-		
-		m_clock.setTypeface( Typeface.create( family, Typeface.NORMAL ) );
+		m_textView.setTypeface( Typeface.create( family, Typeface.NORMAL ) );
 	}
 	
 	private void setFontSize( final int fontSize ) {
-		m_fontSize = fontSize;
+		if( m_textInfo.fontSize != fontSize ) {
+			m_textInfo.fontSize = fontSize;
+			m_textInfo.save();
+		}
 		m_fontSizeButton.setText( fontSize + "" );
-		
-		m_clock.setTextSize( fontSize );
+		m_textView.setTextSize( fontSize );
 	}
 
 }

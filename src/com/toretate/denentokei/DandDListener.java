@@ -4,7 +4,6 @@ import android.content.ClipData;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -38,22 +37,30 @@ public class DandDListener implements GestureDetector.OnGestureListener, View.On
 		{
 			final View view = (View)event.getLocalState();
 			final RelativeLayout.LayoutParams param = (RelativeLayout.LayoutParams)view.getLayoutParams();
-			if( view.getId() == R.id.chaClock ) {
-				int l = (int)event.getX() - m_touchPointInTarget.x;
-				int t = (int)event.getY() - m_touchPointInTarget.y;
-				int r = param.rightMargin;
-				int b = param.bottomMargin;
-				param.setMargins( l, t, r, b );
-				view.setLayoutParams( param );
-			} else {
-				View parent = (View)view.getParent();
-				int l = (int)event.getX() - m_touchPointInTarget.x;
-				int t = param.topMargin;
-				int r = param.rightMargin;
-				int b = parent.getHeight() - ( (int)event.getY() - m_touchPointInTarget.y ) - view.getHeight();
-				param.setMargins( l, t, r, b );
-				view.setLayoutParams( param );
-			}
+			
+			int l = (int)event.getX() - m_touchPointInTarget.x;
+			int t = (int)event.getY() - m_touchPointInTarget.y;
+			int r = param.rightMargin;
+			int b = param.bottomMargin;
+			param.setMargins( l, t, r, b );
+			view.setLayoutParams( param );
+			
+//			if( view.getId() == R.id.chaClock ) {
+//				int l = (int)event.getX() - m_touchPointInTarget.x;
+//				int t = (int)event.getY() - m_touchPointInTarget.y;
+//				int r = param.rightMargin;
+//				int b = param.bottomMargin;
+//				param.setMargins( l, t, r, b );
+//				view.setLayoutParams( param );
+//			} else {
+//				View parent = (View)view.getParent();
+//				int l = (int)event.getX() - m_touchPointInTarget.x;
+//				int t = param.topMargin;
+//				int r = param.rightMargin;
+//				int b = parent.getHeight() - ( (int)event.getY() - m_touchPointInTarget.y ) - view.getHeight();
+//				param.setMargins( l, t, r, b );
+//				view.setLayoutParams( param );
+//			}
 			
 			return true;
 		}
