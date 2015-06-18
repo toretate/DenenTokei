@@ -1,3 +1,7 @@
+<!--
+ ウィジットのレイアウトを修正するためのアクティビティ
+ ここで設定した値は、widget_custom.xml に最終的に反映されます
+ -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -36,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sta:"
+            android:text="Cha:"
             />
         
 	    <Button 
@@ -44,14 +48,14 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="2"
-	        android:text="serif"
+	        android:text="monospace"
 	        />
 	    <Button
 	        android:id="@+id/charismaFontSizeButton"
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="10"
+	        android:text="24"
 	        />
 	</LinearLayout>
     
@@ -66,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cha:"
+            android:text="Sta:"
             />
         
 	    <Button 
@@ -74,14 +78,44 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="2"
-	        android:text="serif"
+	        android:text="monospace"
 	        />
 	    <Button
 	        android:id="@+id/staminaFontSizeButton"
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="10"
+	        android:text="24"
+	        />
+	</LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/StaSubFontSettings"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/StaminaFontSettings"
+        >
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StaSub:"
+            />
+        
+	    <Button 
+	        android:id="@+id/staSubFontListButton1"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="2"
+	        android:text="monospace"
+	        />
+	    <Button
+	        android:id="@+id/staSubFontSizeButton"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="24"
 	        />
 	</LinearLayout>
     
@@ -92,7 +126,7 @@
 	    android:layout_height="110dp"
 	    android:padding="@dimen/widget_margin"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/StaminaFontSettings"
+        android:layout_below="@+id/StaSubFontSettings"
         >
         
         <TextView
@@ -101,9 +135,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:typeface="serif"
-            android:text="10/12 後24"
-            tools:text="10/12 後24"
+            android:typeface="monospace"
+            android:textSize="24sp"
+            android:text="10/12"
+            tools:text="10/12"
+            />
+        
+        <TextView
+            android:id="@+id/staSubClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:typeface="monospace"
+            android:textSize="24sp"
+            android:text="後24"
+            tools:text="後24"
             />
         
         <TextView
@@ -112,7 +159,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:typeface="serif"
+            android:typeface="monospace"
+            android:textSize="24sp"
             android:text="100/300"
             tools:text="100/300"
             />

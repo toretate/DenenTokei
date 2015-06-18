@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="collector_mission_title">
+        <item>怒涛の炎獣</item>
+        <item>交錯する陣容</item>
+    	<item>ミスリル争奪戦</item>
+		<item>怒涛の炎獣</item>
+		<item>怒涛の炎獣</item>
+	</string-array>
+</resources>

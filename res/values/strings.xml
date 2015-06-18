@@ -6,6 +6,7 @@
 
     <!-- ウィジェット名 -->
     <string name="widget_name">アイギス田園タイマー</string>
+    <string name="collector_widget_name">アイギス収集カウンター</string>
 
     <!-- ウィジェットで使用 -->
     <string name="action_settings">Settings</string>
