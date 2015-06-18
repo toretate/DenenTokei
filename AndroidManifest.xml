@@ -78,6 +78,42 @@
                 android:resource="@xml/widget_info_2x1" />
         </receiver>
         
+        <!-- 収集ウィジェットの設定用アクティビティ -->
+        <activity
+            android:name=".collector.CollectorWidgetSettingsActivity"
+            android:label="@string/collector_widget_name"
+            android:launchMode="standard" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        
+        <!-- ウィジェット
+        <receiver
+            android:name=".collector.CollectorWidget"
+            android:label="@string/collector_widget_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.intent.action.PACKAGE_RESTARTED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                
+                <action android:name="android.intent.action.ACTION_MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_collector_info" />
+        </receiver>
+         -->
+
         <!-- カリスタ消費ボタン一覧の編集用アクティビティ -->
         <activity
             android:name=".EditPresetChaStaListActivity"
