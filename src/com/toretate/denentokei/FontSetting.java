@@ -20,7 +20,7 @@ import com.toretate.denentokei.dialog.NumberPickerDialog.NumberChangedListener;
 public class FontSetting {
 	
     enum FontSettingType {
-    	Sta("Sta"), Cha("Cha"), ;
+    	Sta("Sta"), StaSub("StaSub"), Cha("Cha"), ;
     	final @NonNull String typeString;
     	FontSettingType( final @NonNull String typeString ) { this.typeString = typeString; }
     }
@@ -28,12 +28,12 @@ public class FontSetting {
 	
 	private final WidgetLayoutInfo.WidgetTextLayoutInfo m_textInfo;	// モデル
 	
-	private final @NonNull Button m_fontFamilyButton;
-	private final @NonNull Button m_fontSizeButton;
-	private final @NonNull TextView m_textView;
+	private final @NonNull Button m_fontFamilyButton;	//!< フォントファミリを変更するボタン
+	private final @NonNull Button m_fontSizeButton;		//!< フォントサイズを変更するボタン
+	private final @NonNull TextView m_textView;			//!< テキスト内容
 	
-	private final @NonNull DandDListener m_listener;
-	private final @NonNull GestureDetector m_gesture;
+	private final @NonNull DandDListener m_listener;	//!< D&Dリスナ
+	private final @NonNull GestureDetector m_gesture;	//!< 長押し判定
 	
 	
 	public FontSetting( final @NonNull Button fontFamilyButton, final @NonNull Button fontSizeButton, final @NonNull TextView textView, final Activity parent, final @NonNull FontSettingType type, final WidgetLayoutInfo info ) {

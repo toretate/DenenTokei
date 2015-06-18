@@ -3,6 +3,7 @@ package com.toretate.denentokei;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,9 +22,9 @@ public class WidgetAlarmUtils {
 	 * @param appWidgetId	アラームの対象となるウィジェットID
 	 * @return				アラーム用のIntent
 	 */
-	private static @NonNull Intent buildAlarmIntent( @NonNull final Context context, final int appWidgetId )
+	private static @NonNull Intent buildAlarmIntent( @NonNull final Context context, final int appWidgetId, @NonNull final Class<? extends AppWidgetProvider> targetClass )
 	{
-		final Intent intent = new Intent(context, ClockWidget.class );
+		final Intent intent = new Intent(context, targetClass );
 		intent.setAction( AppWidgetManager.ACTION_APPWIDGET_UPDATE );
 		intent.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId );
 		intent.setData( Uri.parse( URI_SCHEME + "://update/" + appWidgetId) );
@@ -35,9 +36,9 @@ public class WidgetAlarmUtils {
 	 * @param context		コンテキスト
 	 * @param appWidgetIds	定期アラームを設定するウィジェットID群
 	 */
-	static void setAlarm( @NonNull final Context context, @NonNull final int[] appWidgetIds )
+	public static void setAlarm( @NonNull final Context context, @NonNull final int[] appWidgetIds, final @NonNull Class<? extends AppWidgetProvider> widgetClass )
 	{
-		for( int appWidgetId : appWidgetIds ) setAlarm( context, appWidgetId );
+		for( int appWidgetId : appWidgetIds ) setAlarm( context, appWidgetId, widgetClass );
 	}
 	
 	/**
@@ -45,12 +46,12 @@ public class WidgetAlarmUtils {
 	 * @param context		コンテキスト
 	 * @param appWidgetId	定期アラームを設定するウィジェットID
 	 */
-	static void setAlarm( @NonNull final Context context, final int appWidgetId )
+	public static void setAlarm( @NonNull final Context context, final int appWidgetId, final @NonNull Class<? extends AppWidgetProvider> widgetClass )
 	{
 		if( appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) return;
 		
 		final AlarmManager mng = (AlarmManager)context.getSystemService( Context.ALARM_SERVICE );
-		final Intent alarmIntent = buildAlarmIntent( context, appWidgetId );
+		final Intent alarmIntent = buildAlarmIntent( context, appWidgetId, widgetClass );
 		final PendingIntent operation = PendingIntent.getBroadcast(context, appWidgetId, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT );
 		mng.setRepeating( AlarmManager.RTC, System.currentTimeMillis(), s_interval, operation);
 	}
@@ -60,13 +61,13 @@ public class WidgetAlarmUtils {
 	 * @param context		コンテキスト
 	 * @param appWidgetId	定期アラームを削除するウィジェットID
 	 */
-	static void deleteAlarm( @NonNull final Context context, final int appWidgetId )
+	public static void deleteAlarm( @NonNull final Context context, final int appWidgetId, final @NonNull Class<? extends AppWidgetProvider> widgetClass )
 	{
 		if( appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) return;
 		
 		final AlarmManager mng = (AlarmManager)context.getSystemService( Context.ALARM_SERVICE );
 		if( appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID ) {
-			final Intent alarmIntent = buildAlarmIntent( context, appWidgetId );
+			final Intent alarmIntent = buildAlarmIntent( context, appWidgetId, widgetClass );
 			mng.cancel( PendingIntent.getBroadcast(context, appWidgetId, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT ) );
 		}
 	}
@@ -76,7 +77,7 @@ public class WidgetAlarmUtils {
 	 * @param intent インテント
 	 * @return true:アラーム設置済み
 	 */
-	static boolean isAlarmSet( @NonNull final Intent intent )
+	public static boolean isAlarmSet( @NonNull final Intent intent )
 	{
 		return URI_SCHEME.equals( intent.getScheme() );
 	}

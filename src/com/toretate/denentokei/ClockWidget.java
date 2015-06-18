@@ -83,7 +83,7 @@ public class ClockWidget extends AppWidgetProvider
 		if( appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) return;
 		
 		if( AppWidgetManager.ACTION_APPWIDGET_DELETED.equals( action ) ) {
-			WidgetAlarmUtils.deleteAlarm(context, appWidgetId);
+			WidgetAlarmUtils.deleteAlarm(context, appWidgetId, ClockWidget.class);
 		} else if(
 				AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals( action )
 				|| action.equals("android.appwidget.action.APPWIDGET_UPDATE_OPTIONS")
@@ -95,7 +95,7 @@ public class ClockWidget extends AppWidgetProvider
 			} else {
 				if( WidgetAlarmUtils.isAlarmSet( intent ) == false ) {
 					Log.i("Widget", "　alarm set");
-					WidgetAlarmUtils.setAlarm( context, appWidgetId );
+					WidgetAlarmUtils.setAlarm( context, appWidgetId, ClockWidget.class );
 					updateWidget( context, appWidgetId );
 				} else {
 					updateWidget( context, appWidgetId );
@@ -113,8 +113,8 @@ public class ClockWidget extends AppWidgetProvider
 		int[] appWidgetIds = mng.getAppWidgetIds( new ComponentName( context, ClockWidget.class ) );
 		if( appWidgetIds == null ) return;
 		for( int appWidgetId : appWidgetIds ) {
-			WidgetAlarmUtils.deleteAlarm(context, appWidgetId);
-			WidgetAlarmUtils.setAlarm( context, appWidgetId );
+			WidgetAlarmUtils.deleteAlarm(context, appWidgetId, ClockWidget.class );
+			WidgetAlarmUtils.setAlarm( context, appWidgetId, ClockWidget.class );
 			updateWidget( context, appWidgetId, mng );
 		}
 	}
@@ -129,7 +129,8 @@ public class ClockWidget extends AppWidgetProvider
 	/** ウィジェットの更新を行います */
 	static void updateWidget( @NonNull final Context context, final int appWidgetId, @NonNull final AppWidgetManager mng )
 	{
-		final RemoteViews views = new RemoteViews( context.getPackageName(), R.layout.widget_2x1 );
+		final String pkgName = context.getPackageName();
+		final RemoteViews views = new RemoteViews( pkgName, R.layout.widget_2x1 );
 		
 		// 文字列の更新
 		final ClockInfo info = ClockInfo.loadValues( context, appWidgetId );
@@ -163,5 +164,6 @@ public class ClockWidget extends AppWidgetProvider
 		
 		mng.updateAppWidget( appWidgetId, views );
 	}
+	
 	
 }

@@ -26,6 +26,7 @@ public class WidgetLayoutEditActivity extends Activity {
 	
 	private @Nullable FontSetting m_chaFontSetting;
 	private @Nullable FontSetting m_staFontSetting;
+	private @Nullable FontSetting m_staSubFontSetting;
 
 	// Cha
 	@InjectView(R.id.charismaFontListButton1)
@@ -46,6 +47,17 @@ public class WidgetLayoutEditActivity extends Activity {
 	
 	@InjectView(R.id.staClock)
 	@Nullable TextView m_staTextView;
+	
+	// StaSub
+	@InjectView(R.id.staSubFontListButton1)
+	@Nullable Button m_staSubFontFamilyButton;
+	
+	@InjectView(R.id.staSubFontSizeButton)
+	@Nullable Button m_staSubFontSizeButton;
+	
+	@InjectView(R.id.staSubClock)
+	@Nullable TextView m_staSubTextView;
+	
 	
 	// frame, image
 	@InjectView(R.id.frameRatingBar1)
@@ -68,10 +80,12 @@ public class WidgetLayoutEditActivity extends Activity {
 		
 		m_chaTextView = (TextView)this.findViewById( R.id.chaClock );
 		m_staTextView = (TextView)this.findViewById( R.id.staClock );
+		m_staSubTextView = (TextView)this.findViewById( R.id.staSubClock );
 		
 		m_info = new WidgetLayoutInfo( this, appWidgetId );
 		m_info.getTextLayoutInfo( FontSettingType.Cha ).load();
 		m_info.getTextLayoutInfo( FontSettingType.Sta ).load();
+		m_info.getTextLayoutInfo( FontSettingType.StaSub ).load();
 
 		TextView textView;
 		Button fontFamily;
@@ -99,6 +113,17 @@ public class WidgetLayoutEditActivity extends Activity {
 			fontSetting.resetView();
 		}
 		m_staFontSetting = fontSetting;
+		
+		// スタミナ(Sub)設定
+		fontSetting = null;
+		textView = m_staSubTextView;
+		fontFamily = m_staSubFontFamilyButton;
+		fontSize = m_staSubFontSizeButton;
+		if( textView != null && fontFamily != null && fontSize != null ) {
+			fontSetting = new FontSetting( fontFamily, fontSize, textView, this, FontSetting.FontSettingType.StaSub, m_info );
+			fontSetting.resetView();
+		}
+		m_staSubFontSetting = fontSetting;
 		
 		final ImageView view1 = (ImageView)this.findViewById( R.id.view1 );
 		final View frame1 = (View)this.findViewById( R.id.frame1 );
