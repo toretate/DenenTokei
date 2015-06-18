@@ -40,10 +40,11 @@ public class PresetChaStaExpandableListAdapter extends BaseExpandableListAdapter
 				
 				// m_selectedPresetIdsを初期更新
 				for( int groupPosition=0; groupPosition<this.getGroupCount(); groupPosition++ ) {
-					for( int childPosition=0; childPosition<this.getChildrenCount( groupPosition ); childPosition++ ) {
-						final PresetChaSta preset = getChild( groupPosition, childPosition );
-						if( preset != null && preset.isSelected && preset.isActive ) {
-							m_selectedPresetIds.add( preset.id );
+					final PresetChaSta preset = getGroup( groupPosition );
+					for( int childPosition = 0; childPosition < preset.children.size(); childPosition++ ) {
+						final PresetChaSta child = preset.children.get( childPosition );
+						if( child != null && child.isSelected && child.isActive ) {
+							m_selectedPresetIds.add( child.id );
 						}
 					}
 				}
