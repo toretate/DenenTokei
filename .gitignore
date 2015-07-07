@@ -1,8 +1,9 @@
-bin/
-gen/
-libs/android-support-v4.jar
-.apt_generated/
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
 .DS_Store
-/toretatenee.keystore
-/fabric.properties
-/*.apk
+/build
+/captures
+/*.keystore
+/Thumbs.db
