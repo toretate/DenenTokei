@@ -21,7 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -47,31 +47,31 @@ public class ClockWidgetSettingsActivity extends Activity {
 	
 	private static final int START_PRESET_EDIT = 1000;
 
-	@InjectView( R.id.princeLvSpinner )
+	@Bind( R.id.princeLvSpinner )
 	Button m_princeLvSpinner;
 
-	@InjectView( R.id.charismaMax )
+	@Bind( R.id.charismaMax )
 	TextView m_charismaMax;
-	@InjectView( R.id.charisma )
+	@Bind( R.id.charisma )
 	Button m_charismaSpinner;
 
-	@InjectView( R.id.staminaMax )
+	@Bind( R.id.staminaMax )
 	TextView m_staminaMax;
-	@InjectView( R.id.stamina )
+	@Bind( R.id.stamina )
 	Button m_staminaSpinner;
-	@InjectView( R.id.staminaSub )
+	@Bind( R.id.staminaSub )
 	Button m_staminaSubSpinner;
 	
-//	@InjectView( R.id.setting_widget_layout_button )
+//	@Bind( R.id.setting_widget_layout_button )
 	ImageButton m_widgetLayoutButton;
 	
-	@InjectView( R.id.presetListView )
+	@Bind( R.id.presetListView )
 	ListView m_presetListView;
 
-	@InjectView( R.id.saveButton )
+	@Bind( R.id.saveButton )
 	Button m_saveButton;
 
-	@InjectView( R.id.adView )
+	@Bind( R.id.adView )
 	AdView m_adView;
 	
 	@Override
@@ -82,7 +82,7 @@ public class ClockWidgetSettingsActivity extends Activity {
 		getWindow().requestFeature( Window.FEATURE_ACTION_BAR | Window.FEATURE_ACTION_BAR_OVERLAY );
 
 		setContentView( R.layout.widget_settings );
-		ButterKnife.inject( this );
+		ButterKnife.bind( this );
 
 		// Admob
 		AdRequest adRequest = new AdRequest.Builder().addTestDevice( AdRequest.DEVICE_ID_EMULATOR ).addTestDevice( "10F2FE9276EAE35819748257A08833AE" ).build();

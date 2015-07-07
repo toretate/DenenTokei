@@ -11,7 +11,7 @@
 		android:id="@+id/setting_skin"
 		android:layout_width="220dp"
 		android:layout_height="220dp"
-		android:src="@drawable/rita"
+		android:src="@mipmap/rita"
 		android:layout_centerInParent="true"
 		android:scaleType="fitCenter"
 		android:contentDescription="@string/clockBackgroundDescription"
@@ -24,7 +24,7 @@
 		android:layout_alignParentRight="true"
 		android:scaleType="fitXY"
 		android:background="#00000000"
-		android:src="@drawable/setting_icon"
+		android:src="@mipmap/setting_icon"
 		android:contentDescription="@string/clockSetting"
 		/>
 	<LinearLayout

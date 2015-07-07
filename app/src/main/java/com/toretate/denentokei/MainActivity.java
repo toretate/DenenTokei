@@ -24,7 +24,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -38,11 +38,11 @@ public class MainActivity extends Activity
 {
 	@NonNull ClockInfo m_info = new ClockInfo();
 	
-	@InjectView(R.id.princeLvSpinner) Button m_princeLvSpinner;
+	@Bind(R.id.princeLvSpinner) Button m_princeLvSpinner;
 	
-	@InjectView(R.id.showGoogle) Button m_showGoogle;
+	@Bind(R.id.showGoogle) Button m_showGoogle;
 	
-	@InjectView(R.id.adView) AdView m_adView;
+	@Bind(R.id.adView) AdView m_adView;
 	
 
 	@Override
@@ -62,7 +62,7 @@ public class MainActivity extends Activity
 		getWindow().requestFeature( Window.FEATURE_ACTION_BAR | Window.FEATURE_ACTION_BAR_OVERLAY );
 		
 		setContentView(R.layout.activity_main);
-		ButterKnife.inject( this );
+		ButterKnife.bind( this );
 		
 		// Admob
 		AdRequest adRequest = new AdRequest.Builder()

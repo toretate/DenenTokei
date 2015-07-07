@@ -121,7 +121,7 @@
     
     <RelativeLayout
         android:id="@+id/frame1"
-        android:background="@drawable/border"
+        android:background="@mipmap/border"
 	    android:layout_width="220dp"
 	    android:layout_height="110dp"
 	    android:padding="@dimen/widget_margin"
@@ -172,7 +172,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:scaleType="centerInside"
-            android:src="@drawable/rita" />
+            android:src="@mipmap/rita" />
 
     </RelativeLayout>
 

@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 import com.toretate.denentokei.R;
 
 public class CollectorWidgetSettingsActivity extends Activity {
 
-	@InjectView( R.id.saveButton )
+	@Bind( R.id.saveButton )
 	Button m_saveButton;
 
 	@Override
@@ -23,7 +23,7 @@ public class CollectorWidgetSettingsActivity extends Activity {
 		super.onCreate( savedInstanceState );
 		
 		setContentView( R.layout.activity_edit_widget_collector );
-		ButterKnife.inject( this );
+		ButterKnife.bind( this );
 		
 		m_saveButton.setOnClickListener( new OnClickListener() {
 			@Override

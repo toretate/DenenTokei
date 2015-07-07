@@ -16,7 +16,7 @@ import android.view.WindowManager;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 import com.toretate.denentokei.R;
 
@@ -38,9 +38,9 @@ public class NumberPickerDialog extends DialogFragment {
 	@NonNull
 	private String m_title;
 	
-	@InjectView(R.id.numberPicker1) NumberPicker m_numberPicker1;
-	@InjectView(R.id.numberPicker10) NumberPicker m_numberPicker10;
-	@InjectView(R.id.numberPicker100) NumberPicker m_numberPicker100;
+	@Bind(R.id.numberPicker1) NumberPicker m_numberPicker1;
+	@Bind(R.id.numberPicker10) NumberPicker m_numberPicker10;
+	@Bind(R.id.numberPicker100) NumberPicker m_numberPicker100;
 	
 	public NumberPickerDialog( final int initNumber, final int min, final int max, final @NonNull String title ) {
 		super();
@@ -105,7 +105,7 @@ public class NumberPickerDialog extends DialogFragment {
 		
 		LayoutInflater inf = getActivity().getLayoutInflater();
 		View view = inf.inflate( R.layout.dialog_numberpicker, null, false );
-		ButterKnife.inject( this, view );
+		ButterKnife.bind( this, view );
 
 		if( 0 < m_max ) {
 			m_numberPicker1.setVisibility( View.VISIBLE );
@@ -166,7 +166,7 @@ public class NumberPickerDialog extends DialogFragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		ButterKnife.reset(this);
+		ButterKnife.unbind(this);
 	}
 	
 	@Override

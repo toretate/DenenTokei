@@ -59,14 +59,14 @@
 	
 	<style name="CustomProgressBar" parent="android:Widget.ProgressBar.Horizontal">
 		<item name="android:indeterminateOnly">false</item>
-		<item name="android:progressDrawable">@drawable/collector_progressbar_style</item>
+		<item name="android:progressDrawable">@mipmap/collector_progressbar_style</item>
 		<item name="android:minHeight">10dip</item>
 		<item name="android:maxHeight">20dip</item>
 	</style>       
 	
 	<style name="CustomProgressBarEdit" parent="android:Widget.ProgressBar.Horizontal">
 		<item name="android:indeterminateOnly">false</item>
-		<item name="android:progressDrawable">@drawable/collector_progressbar_style</item>
+		<item name="android:progressDrawable">@mipmap/collector_progressbar_style</item>
 		<item name="android:minHeight">10dip</item>
 		<item name="android:maxHeight">10dip</item>
 	</style>       

@@ -16,7 +16,7 @@ import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 import com.toretate.denentokei.FontSetting.FontSettingType;
 
@@ -29,48 +29,48 @@ public class WidgetLayoutEditActivity extends Activity {
 	private @Nullable FontSetting m_staSubFontSetting;
 
 	// Cha
-	@InjectView(R.id.charismaFontListButton1)
+	@Bind(R.id.charismaFontListButton1)
 	@Nullable Button m_chaFontFamilyButton;
 	
-	@InjectView(R.id.charismaFontSizeButton)
+	@Bind(R.id.charismaFontSizeButton)
 	@Nullable Button m_chaFontSizeButton;
 	
-	@InjectView(R.id.chaClock)
+	@Bind(R.id.chaClock)
 	@Nullable TextView m_chaTextView;
 	
 	// Sta
-	@InjectView(R.id.staminaFontListButton1)
+	@Bind(R.id.staminaFontListButton1)
 	@Nullable Button m_staFontFamilyButton;
 	
-	@InjectView(R.id.staminaFontSizeButton)
+	@Bind(R.id.staminaFontSizeButton)
 	@Nullable Button m_staFontSizeButton;
 	
-	@InjectView(R.id.staClock)
+	@Bind(R.id.staClock)
 	@Nullable TextView m_staTextView;
 	
 	// StaSub
-	@InjectView(R.id.staSubFontListButton1)
+	@Bind(R.id.staSubFontListButton1)
 	@Nullable Button m_staSubFontFamilyButton;
 	
-	@InjectView(R.id.staSubFontSizeButton)
+	@Bind(R.id.staSubFontSizeButton)
 	@Nullable Button m_staSubFontSizeButton;
 	
-	@InjectView(R.id.staSubClock)
+	@Bind(R.id.staSubClock)
 	@Nullable TextView m_staSubTextView;
 	
 	
 	// frame, image
-	@InjectView(R.id.frameRatingBar1)
+	@Bind(R.id.frameRatingBar1)
 	@Nullable RatingBar m_frameBar;
 	
-	@InjectView(R.id.imageRatingBar1)
+	@Bind(R.id.imageRatingBar1)
 	@Nullable RatingBar m_imageBar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_widget_layout);
-		ButterKnife.inject( this );
+		ButterKnife.bind( this );
 
 		final Intent intent = this.getIntent();
 		int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
