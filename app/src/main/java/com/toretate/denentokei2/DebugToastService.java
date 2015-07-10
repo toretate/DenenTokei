@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 import android.app.Service;
 import android.content.Intent;

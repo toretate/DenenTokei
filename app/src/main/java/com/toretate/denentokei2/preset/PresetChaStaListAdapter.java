@@ -1,4 +1,4 @@
-package com.toretate.denentokei.preset;
+package com.toretate.denentokei2.preset;
 
 import java.util.List;
 import java.util.Locale;

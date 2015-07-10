@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 
 import com.crashlytics.android.Crashlytics;
@@ -28,8 +28,8 @@ import butterknife.Bind;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.toretate.denentokei.dialog.NumberPickerDialog;
-import com.toretate.denentokei.preset.PresetChaStaDefs;
+import com.toretate.denentokei2.dialog.NumberPickerDialog;
+import com.toretate.denentokei2.preset.PresetChaStaDefs;
 
 /**
  * 各ウィジェットを作成する際の初期値となるものを設定する

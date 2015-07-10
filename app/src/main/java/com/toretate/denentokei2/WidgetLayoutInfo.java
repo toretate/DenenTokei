@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 import java.lang.ref.WeakReference;
 
@@ -12,10 +12,10 @@ import android.support.annotation.Nullable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.toretate.denentokei.FontSetting.FontSettingType;
+import com.toretate.denentokei2.FontSetting.FontSettingType;
 
 public class WidgetLayoutInfo {
-    private static final String PREFS_NAME = "com.toretate.denentokei.WidgetLayoutInfo";
+    private static final String PREFS_NAME = "WidgetLayoutInfo";
     public static final @NonNull String DEF_FONT_FAMILY = "monospace";
     public static final int DEF_FONT_SIZE = 24;
 	

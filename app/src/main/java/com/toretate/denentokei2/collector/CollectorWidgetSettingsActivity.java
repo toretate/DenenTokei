@@ -1,4 +1,4 @@
-package com.toretate.denentokei.collector;
+package com.toretate.denentokei2.collector;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;

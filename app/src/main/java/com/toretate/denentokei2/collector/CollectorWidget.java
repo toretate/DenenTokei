@@ -1,4 +1,4 @@
-package com.toretate.denentokei.collector;
+package com.toretate.denentokei2.collector;
 
 import java.util.Calendar;
 
@@ -13,9 +13,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.toretate.denentokei.ClockWidgetSettingsActivity;
 import com.toretate.denentokei.R;
-import com.toretate.denentokei.WidgetAlarmUtils;
+import com.toretate.denentokei2.WidgetAlarmUtils;
 
 public class CollectorWidget extends AppWidgetProvider {
 	public static String s_fromWidgetSettingButton 	= "fromWidgetSettingButton";

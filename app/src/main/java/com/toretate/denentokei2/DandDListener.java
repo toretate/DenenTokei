@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 import android.content.ClipData;
 import android.graphics.Canvas;

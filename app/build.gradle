@@ -19,7 +19,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.toretate.denentokei"
+        applicationId "com.toretate.denentokei2"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

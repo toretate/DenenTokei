@@ -1,4 +1,4 @@
-package com.toretate.denentokei.preset;
+package com.toretate.denentokei2.preset;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ import android.support.annotation.Nullable;
  * カリスタのプリセット定義
  */
 public class PresetChaStaDefs {
-    private static final String PREFS_NAME = "com.toretate.denentokei.preset.PresetChaStaDefs";
+    private static final String PREFS_NAME = "PresetChaStaDefs";
 	
 	private static PresetChaStaDefs s_instance;
 	public static PresetChaStaDefs getInstance( final @NonNull Context ctx ) {

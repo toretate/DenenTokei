@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +25,12 @@ import butterknife.Bind;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.toretate.denentokei.FontSetting.FontSettingType;
-import com.toretate.denentokei.dialog.NumberPickerDialog;
-import com.toretate.denentokei.preset.PresetChaSta;
-import com.toretate.denentokei.preset.PresetChaStaListAdapter;
-import com.toretate.denentokei.preset.PresetChaStaListAdapter.PresetChaStaSelectedListener;
-import com.toretate.denentokei.preset.PresetChaStaDefs;
+import com.toretate.denentokei2.FontSetting.FontSettingType;
+import com.toretate.denentokei2.dialog.NumberPickerDialog;
+import com.toretate.denentokei2.preset.PresetChaSta;
+import com.toretate.denentokei2.preset.PresetChaStaListAdapter;
+import com.toretate.denentokei2.preset.PresetChaStaListAdapter.PresetChaStaSelectedListener;
+import com.toretate.denentokei2.preset.PresetChaStaDefs;
 
 /**
  * 各ウィジェットを設定するためのアクティビティ

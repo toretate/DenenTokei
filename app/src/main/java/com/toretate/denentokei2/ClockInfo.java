@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 import java.util.Locale;
 
@@ -10,7 +10,7 @@ import android.widget.Toast;
  
 public class ClockInfo
 {
-    private static final String PREFS_NAME = "com.toretate.denentokei.ClockInfo";
+    private static final String PREFS_NAME = "ClockInfo";
     private static final String PREF_PREFIX_KEY = "prefix_";
 
     private static final long s_interval_charisma = 1000 * 60 * 3;	// 3分毎に更新

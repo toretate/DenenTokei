@@ -1,4 +1,4 @@
-package com.toretate.denentokei.dialog;
+package com.toretate.denentokei2.dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

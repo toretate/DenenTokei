@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 import android.os.AsyncTask;
 import android.os.Looper;

@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -12,10 +12,8 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.toretate.denentokei.dialog.FontFamilyDialog;
-import com.toretate.denentokei.dialog.FontFamilyDialog.FontFamilyChangedListener;
-import com.toretate.denentokei.dialog.NumberPickerDialog;
-import com.toretate.denentokei.dialog.NumberPickerDialog.NumberChangedListener;
+import com.toretate.denentokei2.dialog.FontFamilyDialog;
+import com.toretate.denentokei2.dialog.NumberPickerDialog;
 
 public class FontSetting {
 	
@@ -82,7 +80,7 @@ public class FontSetting {
 			public void onClick(View v) {
 				
 				final FontFamilyDialog dialog = new FontFamilyDialog( m_textInfo.fontName );
-				dialog.setFontFamilyChangedListener( new FontFamilyChangedListener() {
+				dialog.setFontFamilyChangedListener( new FontFamilyDialog.FontFamilyChangedListener() {
 					@Override
 					public void fontFamilyChanged(String family) {
 						setFontFamily( family != null ? family : WidgetLayoutInfo.DEF_FONT_FAMILY );
@@ -98,7 +96,7 @@ public class FontSetting {
 			@Override
 			public void onClick( final View v ) {
 				final NumberPickerDialog dialog = new NumberPickerDialog( m_textInfo.fontSize, 1, 54, "フォントサイズ" );
-				dialog.setNumberChangedListener( new NumberChangedListener() {
+				dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
 					@Override
 					public void numberChanged( int number ) {
 						setFontSize( number );

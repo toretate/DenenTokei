@@ -5,7 +5,7 @@
     android:minWidth="110dp"
     android:minHeight="110dp"
     android:initialLayout="@layout/widget_2x2"
-    android:configure="com.toretate.denentokei.ClockWidgetSettingsActivity"
+    android:configure="com.toretate.denentokei2.ClockWidgetSettingsActivity"
     >
     
 

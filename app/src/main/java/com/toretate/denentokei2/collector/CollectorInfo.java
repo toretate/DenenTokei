@@ -1,4 +1,4 @@
-package com.toretate.denentokei.collector;
+package com.toretate.denentokei2.collector;
 
 import java.util.Calendar;
 
@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 public class CollectorInfo {
-    private static final String PREFS_NAME = "com.toretate.denentokei.collector.CollectorInfo";
+    private static final String PREFS_NAME = "CollectorInfo";
     private static final String PREF_PREFIX_KEY = "prefix_";
 
 	public int current;				//!< 現在個数

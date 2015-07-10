@@ -1,4 +1,4 @@
-package com.toretate.denentokei;
+package com.toretate.denentokei2;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
-import com.toretate.denentokei.FontSetting.FontSettingType;
+import com.toretate.denentokei2.FontSetting.FontSettingType;
 
 public class WidgetLayoutEditActivity extends Activity {
 	
