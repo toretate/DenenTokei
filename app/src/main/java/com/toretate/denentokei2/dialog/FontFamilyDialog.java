@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.toretate.denentokei.R;
+import com.toretate.denentokei2.R;
 
 public class FontFamilyDialog extends DialogFragment {
 	

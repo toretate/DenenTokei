@@ -11,7 +11,7 @@ import android.widget.Button;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
-import com.toretate.denentokei.R;
+import com.toretate.denentokei2.R;
 
 public class CollectorWidgetSettingsActivity extends Activity {
 

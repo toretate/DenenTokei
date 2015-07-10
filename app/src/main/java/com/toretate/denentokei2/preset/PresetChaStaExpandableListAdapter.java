@@ -20,7 +20,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.toretate.denentokei.R;
+import com.toretate.denentokei2.R;
 
 public class PresetChaStaExpandableListAdapter extends BaseExpandableListAdapter {
 

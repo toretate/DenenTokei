@@ -13,7 +13,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.toretate.denentokei.R;
+import com.toretate.denentokei2.R;
 import com.toretate.denentokei2.WidgetAlarmUtils;
 
 public class CollectorWidget extends AppWidgetProvider {

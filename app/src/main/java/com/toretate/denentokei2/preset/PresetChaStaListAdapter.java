@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
-import com.toretate.denentokei.R;
+import com.toretate.denentokei2.R;
 
 /**
  * PresetChaStaをグリッドで見せるためのアダプタ(とはいうもののListViewで見せるんだが)
