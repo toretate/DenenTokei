@@ -53,7 +53,9 @@ public class WidgetAlarmUtils {
 		final AlarmManager mng = (AlarmManager)context.getSystemService( Context.ALARM_SERVICE );
 		final Intent alarmIntent = buildAlarmIntent( context, appWidgetId, widgetClass );
 		final PendingIntent operation = PendingIntent.getBroadcast(context, appWidgetId, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT );
-		mng.setRepeating( AlarmManager.RTC, System.currentTimeMillis(), s_interval, operation);
+
+		final long first = System.currentTimeMillis() + 1000;
+		mng.setRepeating( AlarmManager.RTC, first, s_interval, operation);
 	}
 	
 	/**

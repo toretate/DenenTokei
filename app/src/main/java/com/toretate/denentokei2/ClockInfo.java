@@ -183,7 +183,7 @@ public class ClockInfo
 			m_charismaMax = 427;
 		}
 		
-		m_charisma = Math.min( m_charismaMax +1, m_charisma );
+		m_charisma = Math.min(m_charismaMax + 1, m_charisma);
 	}
 
 	/** スタミナを再計算 */
@@ -220,7 +220,7 @@ public class ClockInfo
 		if( appWidgetId == -1 || appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) return;
 		this.m_saveTime = currentTimeMillis;
 		
-		final SharedPreferences.Editor editor = context.getSharedPreferences( PREFS_NAME + appWidgetId, 0 ).edit();
+		final SharedPreferences.Editor editor = context.getSharedPreferences( PREFS_NAME, 0 ).edit();
 		editor.putInt( PREF_PREFIX_KEY + "PrinceLv", this.m_princeLv );
 		editor.putInt( PREF_PREFIX_KEY + "Charisma", this.m_charisma );
 		editor.putInt( PREF_PREFIX_KEY + "CharismaMax", this.m_charismaMax );
@@ -231,7 +231,16 @@ public class ClockInfo
 		editor.putLong( PREF_PREFIX_KEY + "SAVETIME", this.m_saveTime );
 		editor.commit();
 	}
-	
+
+	/**
+	 *  設定値を保存
+	 *  @param context コンテキスト
+	 */
+	void saveValues( @NonNull final Context context, final long currentTimeMillis )
+	{
+		this.saveValues( context, -2, currentTimeMillis );
+	}
+
 	/**
 	 * charisma, charismaSub, stamina, staminaSub を現在の時刻で再設定する
 	 */
@@ -260,7 +269,7 @@ public class ClockInfo
 		
 		ClockInfo info = loadWidgetCreateValues( context );
 		
-		final SharedPreferences prefs = context.getSharedPreferences( PREFS_NAME + appWidgetId, 0 );
+		final SharedPreferences prefs = context.getSharedPreferences( PREFS_NAME, 0 );
 		if( prefs.contains( PREF_PREFIX_KEY + "PrinceLv" ) ) {
 			info.m_princeLv 	= prefs.getInt( PREF_PREFIX_KEY + "PrinceLv", 0 );
 			info.m_charisma 	= prefs.getInt( PREF_PREFIX_KEY + "Charisma", 0 );
