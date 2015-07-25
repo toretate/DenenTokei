@@ -21,6 +21,11 @@ import butterknife.Bind;
 import com.toretate.denentokei2.R;
 
 public class NumberPickerDialog extends DialogFragment {
+
+	private static final String ArgInitNumber = "initNumber";
+	private static final String ArgMin = "min";
+	private static final String ArgMax = "max";
+	private static final String ArgTitle = "title";
 	
 	public interface NumberChangedListener {
 		public void numberChanged( final int number );	//!< 数値が変更された時に呼ばれます
@@ -41,17 +46,17 @@ public class NumberPickerDialog extends DialogFragment {
 	@Bind(R.id.numberPicker1) NumberPicker m_numberPicker1;
 	@Bind(R.id.numberPicker10) NumberPicker m_numberPicker10;
 	@Bind(R.id.numberPicker100) NumberPicker m_numberPicker100;
-	
-	public NumberPickerDialog( final int initNumber, final int min, final int max, final @NonNull String title ) {
-		super();
-		m_initNumber = initNumber;
-		m_min = min;
-		m_max = max;
-		m_title = title;
+
+	public NumberPickerDialog() {
 	}
-	
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		m_initNumber = getArguments().getInt( ArgInitNumber );
+		m_min = getArguments().getInt( ArgMin );
+		m_max = getArguments().getInt( ArgMax );
+		m_title = getArguments().getString( ArgTitle );
+
 		Dialog dialog = new Dialog( getActivity(), R.style.transparent );
 		dialog.setTitle( m_title );
 		dialog.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
@@ -76,14 +81,17 @@ public class NumberPickerDialog extends DialogFragment {
 		num += m_numberPicker100.getValue() * 100;
 		return num;
 	}
-	
+
+	// pickerの状態が変更された時の処理
 	private void numberChanged( NumberPicker picker, int newVal ) {
 		int num = getNumber();
-		
+
+		// numの各桁の数値を num1,num10,num100 に振り分け
 		int num1 = num % 10;
 		int num10 = ( num / 10 ) % 10;
 		int num100 = ( num / 100 ) % 10;
-		
+
+		// pickerの数値から num を再計算
 		if( picker == m_numberPicker1 ) {
 			num = num100 * 100 + num10 * 10 + newVal * 1;
 		} else if( picker == m_numberPicker10 ) {
@@ -114,7 +122,9 @@ public class NumberPickerDialog extends DialogFragment {
 			if( m_max < 10 ) {
 				m_numberPicker1.setMaxValue( m_max );
 			} else {
-				m_numberPicker1.setMaxValue( 9 );
+				int max = m_max % 10;
+				if( max == 0 ) max = 9;
+				m_numberPicker1.setMaxValue( max );
 			}
 			m_numberPicker1.setValue( ( m_initNumber / 1 ) % 10 );
 			m_numberPicker1.setOnValueChangedListener( new OnValueChangeListener() {
@@ -131,7 +141,9 @@ public class NumberPickerDialog extends DialogFragment {
 			if( m_max < 100 ) {
 				m_numberPicker10.setMaxValue( ( m_max / 10 ) % 10 );
 			} else {
-				m_numberPicker10.setMaxValue( 9 );
+				int max = ( m_max / 10 ) % 10;
+				if( max == 0 ) max = 9;
+				m_numberPicker10.setMaxValue( max );
 			}
 			m_numberPicker10.setValue( ( m_initNumber / 10 ) % 10 );
 			m_numberPicker10.setOnValueChangedListener( new OnValueChangeListener() {
@@ -148,7 +160,9 @@ public class NumberPickerDialog extends DialogFragment {
 			if( m_max < 1000 ) {
 				m_numberPicker100.setMaxValue( ( m_max / 100 ) % 100 );
 			} else {
-				m_numberPicker100.setMaxValue( 9 );
+				int max = ( m_max / 100 ) % 10;
+				if( max == 0 ) max = 9;
+				m_numberPicker100.setMaxValue( max );
 			}
 			m_numberPicker100.setValue( ( m_initNumber / 100 ) % 10 );
 			m_numberPicker100.setOnValueChangedListener( new OnValueChangeListener() {
@@ -179,7 +193,18 @@ public class NumberPickerDialog extends DialogFragment {
 		WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
 		params.gravity = Gravity.BOTTOM;
 		params.width = WindowManager.LayoutParams.MATCH_PARENT;
-		dialog.getWindow().setAttributes( params );
+		dialog.getWindow().setAttributes(params);
 	}
-	
+
+	public static Bundle createBundle( final int initNumber, final int min, final int max, final String title ) {
+		Bundle bundle = new Bundle();
+		bundle.putInt( NumberPickerDialog.ArgInitNumber, initNumber );
+		bundle.putInt( NumberPickerDialog.ArgMin, min );
+		bundle.putInt( NumberPickerDialog.ArgMax, max );
+		bundle.putString( NumberPickerDialog.ArgTitle, title );
+
+
+		return bundle;
+	}
+
 }

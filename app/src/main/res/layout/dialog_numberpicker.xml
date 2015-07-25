@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -39,6 +40,15 @@
 			android:layout_gravity="center_horizontal"
 			android:visibility="visible"
 			/>
+		<TextView
+			android:id="@+id/addText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			tools:text="/test"
+			android:text="/test"
+			android:visibility="visible"
+			android:layout_gravity="center_vertical"
+			android:textSize="32dp"/>
     </LinearLayout>
-	
+
 </LinearLayout>

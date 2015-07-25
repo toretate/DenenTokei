@@ -193,7 +193,9 @@ public class ClockWidgetSettingsActivity extends Activity {
 			public void onClick( View v ) {
 				String title = getString( R.string.princeLv );
 				title = title != null ? title : "";
-				final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getPrinceLv(), 1, 300, title );
+				final NumberPickerDialog dialog = new NumberPickerDialog();
+				final Bundle args = NumberPickerDialog.createBundle( m_info.getPrinceLv(), 1, 300, title );
+				dialog.setArguments( args );
 				dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
 					@Override
 					public void numberChanged( int number ) {
@@ -241,7 +243,8 @@ public class ClockWidgetSettingsActivity extends Activity {
 			public void onClick( View v ) {
 				String title = getString( R.string.charisma );
 				title = title != null ? title : "";
-				final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getCharisma(), 0, m_info.getCharismaMax() + 1, title );
+				final NumberPickerDialog dialog = new NumberPickerDialog();
+				dialog.setArguments( NumberPickerDialog.createBundle( m_info.getCharisma(), 0, m_info.getCharismaMax() +1, title ));
 				dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
 					@Override
 					public void numberChanged( int number ) { setCharisma( number, /*needSave*/false ); }
@@ -269,7 +272,8 @@ public class ClockWidgetSettingsActivity extends Activity {
 				public void onClick( View v ) {
 					String title = getString( R.string.stamina );
 					title = title != null ? title : "";
-					final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getStamina(), 0, m_info.getStaminaMax() + 1, title );
+					final NumberPickerDialog dialog = new NumberPickerDialog();
+					dialog.setArguments( NumberPickerDialog.createBundle( m_info.getStamina(), 0, m_info.getStaminaMax() + 1, title ) );
 					dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
 						@Override
 						public void numberChanged( final int number ) { setStamina( number, /*needSave*/false ); }
@@ -292,7 +296,8 @@ public class ClockWidgetSettingsActivity extends Activity {
 				public void onClick( View v ) {
 					String title = getString( R.string.next );
 					title = title != null ? title : "";
-					final NumberPickerDialog dialog = new NumberPickerDialog( m_info.getStaminaSub(), 0, 60, title );
+					final NumberPickerDialog dialog = new NumberPickerDialog();
+					dialog.setArguments( NumberPickerDialog.createBundle( m_info.getStaminaSub(), 0, 60, title ) );
 					dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
 						@Override
 						public void numberChanged( final int number ) { setStaminaSub( number, /*needSave*/false ); }

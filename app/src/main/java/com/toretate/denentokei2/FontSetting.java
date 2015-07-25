@@ -2,6 +2,7 @@ package com.toretate.denentokei2;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -95,18 +96,22 @@ public class FontSetting {
 		m_fontSizeButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick( final View v ) {
-				final NumberPickerDialog dialog = new NumberPickerDialog( m_textInfo.fontSize, 1, 54, "フォントサイズ" );
-				dialog.setNumberChangedListener( new NumberPickerDialog.NumberChangedListener() {
+				final NumberPickerDialog dialog = new NumberPickerDialog();
+
+				final Bundle bundle = NumberPickerDialog.createBundle( m_textInfo.fontSize, 1, 54, "フォントサイズ" );
+				dialog.setArguments( bundle );
+
+				dialog.setNumberChangedListener(new NumberPickerDialog.NumberChangedListener() {
 					@Override
-					public void numberChanged( int number ) {
-						setFontSize( number );
+					public void numberChanged(int number) {
+						setFontSize(number);
 					}
-					
+
 					@Override
-					public void dialogClosed( int number ) {
-						setFontSize( number );
+					public void dialogClosed(int number) {
+						setFontSize(number);
 					}
-				} );
+				});
 				dialog.show( activity.getFragmentManager(), "FontSizePicker" );
 			}
 		});

@@ -12,7 +12,7 @@
         android:id="@+id/setting_skin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/panel_2x1"
+        android:src="@drawable/panel_2x1"
         android:layout_centerInParent="true"
         android:scaleType="fitXY"
         android:contentDescription="@string/clockBackgroundDescription"
